@@ -1,4 +1,4 @@
-package com.example.eduwithbe;
+package com.example.eduwithbe.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
