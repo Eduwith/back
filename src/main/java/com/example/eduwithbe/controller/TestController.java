@@ -1,4 +1,4 @@
-package com.example.eduwithbe;
+package com.example.eduwithbe.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
