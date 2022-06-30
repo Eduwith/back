@@ -2,30 +2,30 @@
 
 [커밋 메세지]
 
-add: feat 이외의 부수적인 코드 추가 등
+ADD: feat 이외의 부수적인 코드 추가 등
 
-feat: feature, 새로운 기능 추가
+FEAT: feature, 새로운 기능 추가
 
-fix: 버그 수정
+FIX: 버그 수정
 
-merge: 마지
+MERGE: 마지
 
-chore: 허드렛일, 코드 작성x, 업데이트o
+CHORE: 허드렛일, 코드 작성x, 업데이트o
 
-refactor: 소스코드 보기 쉽도록 수정
+REFACTOR: 소스코드 보기 쉽도록 수정
 
-hotfix : issue나 QA에서 문의된 급한 버그 및 오류 해결
+HOTFIX : issue나 QA에서 문의된 급한 버그 및 오류 해결
 
-docs: 문서 파일 수정, ex) README
+DOCS: 문서 파일 수정, ex) README
 
-style: 코딩 컨벤션
+STYLE: 코딩 컨벤션
 
-test: 테스트
+TEST: 테스트
 
-perf: 성능 개선
+PERF: 성능 개선
 
-ci: ci
+CI: ci
 
-build: make 파일 등 빌드 시
+BUILD: make 파일 등 빌드 시
 
-revert: 커밋 되돌리기
+REVERT: 커밋 되돌리기
