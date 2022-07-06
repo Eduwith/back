@@ -1,16 +1,14 @@
 package com.example.eduwithbe.Service;
 
-import com.example.eduwithbe.dto.MemberLoginDTO;
-import com.example.eduwithbe.dto.MemberSaveDTO;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import com.example.eduwithbe.dto.UserLoginDTO;
+import com.example.eduwithbe.dto.UserSaveDTO;
 
-public interface MemberService {
+import java.util.Map;
 
-    Long save(MemberSaveDTO memberSaveDTO);
+public interface UserService {
 
-    // 내용 추가
-    boolean login(MemberLoginDTO memberLoginDTO);
+    Map<String, Object> save(UserSaveDTO userSaveDTO);
+
+    boolean login(UserLoginDTO userLoginDTO);
 
 }
