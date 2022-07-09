@@ -25,6 +25,7 @@ public class UserServiceImpl implements UserService {
         if(userEntity.getEmail() != null & userEntity.getPwd() != null
                 & userEntity.getAge() != 0 & userEntity.getName() != null
                 & (userEntity.getGender() == 'M' || userEntity.getGender() == 'F')) {
+            mr.save(userEntity);
             response.put("result", "SUCCESS");
             response.put("user", userEntity);
         } else {

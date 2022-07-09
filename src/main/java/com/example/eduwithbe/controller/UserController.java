@@ -34,7 +34,13 @@ public class UserController {
 
     @PostMapping("/join") //회원가입 정보 저장
     public Map<String, Object> save(@RequestBody @Validated UserSaveDTO userSaveDTO) {
-        return ms.save(userSaveDTO);
+
+        Map<String, Object> response = new HashMap<>();
+        response = ms.save(userSaveDTO);
+        System.out.println(userSaveDTO.getEmail());
+        System.out.println(userSaveDTO.getAge());
+        System.out.println(response);
+        return response;
     }
 
 //    // 로그인 페이지 요청
@@ -47,12 +53,16 @@ public class UserController {
     @PostMapping("/login")
     public Map<String, Object> login(@RequestBody @Validated UserLoginDTO userLoginDTO, HttpSession session) {
         Map<String, Object> response = new HashMap<>();
+
+        System.out.println(userLoginDTO.getEmail());
+        System.out.println(userLoginDTO.getPwd());
         if (ms.login(userLoginDTO)) {
             session.setAttribute("email", userLoginDTO.getEmail());
             response.put("result", "SUCCESS");
         } else {
             response.put("result", "FAIL");
         }
+        System.out.println(response);
         return response;
     }
 }
