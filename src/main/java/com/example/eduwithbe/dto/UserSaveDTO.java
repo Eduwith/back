@@ -16,4 +16,5 @@ public class UserSaveDTO {
     private char gender;
     private String address;
 
+
 }

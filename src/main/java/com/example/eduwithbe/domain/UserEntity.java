@@ -29,6 +29,7 @@ public class UserEntity {
     @Column(nullable = false)
     private char gender;
 
+    @Column(name = "address")
     private String address;
 
     // MemberSaveDTO -> MemberEntity 객체로 변환하기 위한 메서드
