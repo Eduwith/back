@@ -5,18 +5,13 @@ import com.example.eduwithbe.domain.UserEntity;
 import com.example.eduwithbe.dto.UserLoginDTO;
 import com.example.eduwithbe.dto.UserSaveDTO;
 import com.example.eduwithbe.repository.UserRepository;
-import com.example.eduwithbe.repository.UserServiceImpl;
 import com.example.eduwithbe.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -32,7 +27,7 @@ public class UserController {
     private UserService ms;
 
     // 회원가입
-    @PostMapping("/join")
+    @PostMapping("/user/join")
     public Map<String, Object> join(@RequestBody UserSaveDTO user) {
         //user.setRoles(Collections.singletonList("ROLE_USER"));
         user.setPwd(passwordEncoder.encode(user.getPwd()));
@@ -54,8 +49,9 @@ public class UserController {
     }
 
     // 로그인
-    @PostMapping("/login")
+    @PostMapping("/user/login")
     public String login(@RequestBody @Validated UserLoginDTO user) {
+        System.out.println("========="+user.getEmail());
         UserEntity member = userRepository.findByEmail(user.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 E-MAIL 입니다."));
         if (!passwordEncoder.matches(user.getPwd(), member.getPwd())) {

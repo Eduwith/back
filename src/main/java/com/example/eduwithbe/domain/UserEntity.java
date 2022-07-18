@@ -46,8 +46,8 @@ public class UserEntity implements UserDetails {
     @Column(name = "address")
     private String address;
 
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    public List<MentoringRecruitmentEntity> mentoringRecruitments = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    public List<MentoringRecruitmentEntity> mentoringRecruitments = new ArrayList<>();
 
 //    public void newMentoringRecruitment(MentoringRecruitmentEntity m){
 //        this.mentoringRecruitments.
