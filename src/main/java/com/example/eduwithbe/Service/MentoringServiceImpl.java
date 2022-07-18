@@ -25,6 +25,7 @@ public class MentoringServiceImpl implements MentoringService {
     public String saveMentoringRecruit(MentoringRecruitSaveDto dto){
         //UserEntity userEntity = userService.getUserFromAuth();
         //dto.setUser(userEntity);
+
         MentoringRecruitmentEntity board = mr.save(dto.toEntity());
         return board.getEmail();
     }

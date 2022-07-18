@@ -49,6 +49,7 @@ public class MentoringRecruitmentEntity {
     @JoinColumn(name = "User_Email")
     private UserEntity user;
 
+
     private String email;
 
     public void updateBoard(MentoringRecruitSaveDto dto){

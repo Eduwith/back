@@ -24,6 +24,7 @@ public class MentoringRecruitSaveDto {
     private String way;
     private String keyword;
     private String info;
+
     //private UserEntity user;
     private String email;
 

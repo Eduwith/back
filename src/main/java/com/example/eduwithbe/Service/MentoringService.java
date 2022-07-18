@@ -14,6 +14,8 @@ public interface MentoringService {
 
     String saveMentoringRecruit(MentoringRecruitSaveDto dto);
 
+
+
     MentoringRecruitmentEntity findByBoardId(Long boardId);
 
     List<MentoringRecruitmentEntity> findAllBoard();

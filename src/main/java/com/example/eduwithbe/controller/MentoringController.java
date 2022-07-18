@@ -23,6 +23,7 @@ public class MentoringController {
         return boardService.saveMentoringRecruit(saveBoardDto);
     }
 
+
     //멘토링 작성 글 하나 찾기
     @GetMapping(value="/{boardId}")
     public String findOneBoard(@PathVariable Long boardId){
