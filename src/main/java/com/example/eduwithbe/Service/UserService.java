@@ -1,5 +1,6 @@
 package com.example.eduwithbe.Service;
 
+import com.example.eduwithbe.domain.UserEntity;
 import com.example.eduwithbe.dto.UserLoginDTO;
 import com.example.eduwithbe.dto.UserSaveDTO;
 
@@ -10,5 +11,7 @@ public interface UserService {
     Map<String, Object> save(UserSaveDTO userSaveDTO);
 
     boolean login(UserLoginDTO userLoginDTO);
+
+    UserEntity getUserFromAuth();
 
 }

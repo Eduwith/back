@@ -1,11 +1,14 @@
-package com.example.eduwithbe.repository;
+package com.example.eduwithbe.Service;
 
 import com.example.eduwithbe.Service.UserService;
 import com.example.eduwithbe.domain.UserEntity;
 import com.example.eduwithbe.dto.UserLoginDTO;
 import com.example.eduwithbe.dto.UserSaveDTO;
+import com.example.eduwithbe.repository.UserRepository;
 import com.example.eduwithbe.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,5 +52,14 @@ public class UserServiceImpl implements UserService {
         } else {
             return false;
         }
+    }
+
+    public UserEntity getUserFromAuth(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        User user = userRepository.findByUserName(authentication.getName());
+//        User user = userRepository.findByEmail(authentication.getName());
+        UserEntity user = (UserEntity) authentication.getPrincipal();
+        return user;
+
     }
 }
