@@ -34,7 +34,7 @@ public class MentoringRecruitmentEntity {
     private String r_period;
 
     @Column(nullable = false)
-    private String m_period;
+    private int m_period;
 
     @Column(nullable = false, length = 4)
     private String way;
@@ -51,6 +51,8 @@ public class MentoringRecruitmentEntity {
 
 
     private String email;
+
+    private String name;
 
     public void updateBoard(MentoringRecruitSaveDto dto){
         this.title = dto.getTitle();
