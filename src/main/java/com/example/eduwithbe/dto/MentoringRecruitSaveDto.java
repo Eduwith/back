@@ -20,13 +20,14 @@ public class MentoringRecruitSaveDto {
     private String field;
     private String region;
     private String r_period;
-    private String m_period;
+    private int m_period;
     private String way;
     private String keyword;
     private String info;
 
     //private UserEntity user;
     private String email;
+    private String name;
 
     public MentoringRecruitmentEntity toEntity(){
         return MentoringRecruitmentEntity.builder()
@@ -40,6 +41,7 @@ public class MentoringRecruitSaveDto {
                 .keyword(keyword)
                 .info(info)
                 .email(email)
+                .name(name)
                 .build();
     }
 }
