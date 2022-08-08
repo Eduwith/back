@@ -1,28 +1,27 @@
 package com.example.eduwithbe.Service;
 
+import com.example.eduwithbe.domain.MentoringApplyEntity;
 import com.example.eduwithbe.domain.MentoringRecruitmentEntity;
-import com.example.eduwithbe.domain.UserEntity;
+import com.example.eduwithbe.dto.MentoringApplySaveDto;
 import com.example.eduwithbe.dto.MentoringRecruitSaveDto;
 import com.example.eduwithbe.dto.MentoringRecruitSearch;
-import com.example.eduwithbe.repository.MentoringRepository;
-import com.example.eduwithbe.repository.UserRepository;
+import com.example.eduwithbe.repository.MentoringRecruitmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class MentoringServiceImpl implements MentoringService {
+public class MentoringRecruitmentServiceImpl implements MentoringRecruitmentService {
 
     @Autowired
     private final UserService userService;
 
     @Autowired
-    private final MentoringRepository mr;
+    private final MentoringRecruitmentRepository mr;
 
     //멘토링 작성 글 생성
     public Long saveMentoringRecruit(MentoringRecruitSaveDto dto){
@@ -34,9 +33,9 @@ public class MentoringServiceImpl implements MentoringService {
     }
 
     //멘토링 작성 글 하나 가져옴
-    public MentoringRecruitmentEntity findByBoardId(Long boardId){
-        MentoringRecruitmentEntity board = mr.findById(boardId).orElseThrow();
-        return board;
+    public MentoringRecruitmentEntity findByMentoringRecruitId(Long m_no){
+        MentoringRecruitmentEntity mentoringRecruitment = mr.findById(m_no).orElseThrow();
+        return mentoringRecruitment;
     }
 
     //멘토링 작성 글 전체 리스트

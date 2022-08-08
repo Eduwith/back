@@ -1,15 +1,14 @@
 package com.example.eduwithbe.controller;
 
-import com.example.eduwithbe.Service.MentoringService;
+import com.example.eduwithbe.Service.MentoringApplyService;
+import com.example.eduwithbe.Service.MentoringRecruitmentService;
 import com.example.eduwithbe.domain.MentoringRecruitmentEntity;
+import com.example.eduwithbe.dto.MentoringApplySaveDto;
 import com.example.eduwithbe.dto.MentoringRecruitSaveDto;
 import com.example.eduwithbe.dto.MentoringRecruitSearch;
-import io.swagger.models.Model;
-import io.swagger.models.auth.In;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,7 +17,7 @@ import java.util.Objects;
 @RestController
 public class MentoringController {
 
-    private final MentoringService mentoringService;
+    private final MentoringRecruitmentService mentoringService;
 
     //멘토링 작성 글 저장
     @PostMapping(value = "/recruitment")
@@ -27,10 +26,10 @@ public class MentoringController {
     }
 
     //멘토링 작성 글 하나 찾기
-    @GetMapping(value = "/{boardId}")
-    public String findOneBoard(@PathVariable Long boardId) {
-        MentoringRecruitmentEntity board = mentoringService.findByBoardId(boardId);
-        return board.toString();
+    @GetMapping(value = "/{m_no}")
+    public String findOneBoard(@PathVariable Long m_no) {
+        MentoringRecruitmentEntity mentoringRecruitment = mentoringService.findByMentoringRecruitId(m_no);
+        return mentoringRecruitment.toString();
     }
 
     //멘토링 작성 글 전체 찾기
@@ -40,18 +39,18 @@ public class MentoringController {
     }
 
     //멘토링 작성 글 수정
-    @PatchMapping(value = "/{boardId}")
-    public String updateBoard(@PathVariable Long boardId, @RequestBody MentoringRecruitSaveDto saveBoardDto) {
-        MentoringRecruitmentEntity board = mentoringService.findByBoardId(boardId);
-        MentoringRecruitmentEntity updatedBoard = mentoringService.updateBoard(board, saveBoardDto);
+    @PatchMapping(value = "/{m_no}")
+    public String updateBoard(@PathVariable Long m_no, @RequestBody MentoringRecruitSaveDto saveBoardDto) {
+        MentoringRecruitmentEntity mentoringRecruitment = mentoringService.findByMentoringRecruitId(m_no);
+        MentoringRecruitmentEntity updatedBoard = mentoringService.updateBoard(mentoringRecruitment, saveBoardDto);
         return updatedBoard.toString();
     }
 
     //멘토링 작성 글 삭제
-    @DeleteMapping(value = "/{boardId}")
-    public String deleteBoard(@PathVariable Long boardId) {
-        MentoringRecruitmentEntity board = mentoringService.findByBoardId(boardId);
-        mentoringService.deleteBoard(board);
+    @DeleteMapping(value = "/{m_no}")
+    public String deleteBoard(@PathVariable Long m_no) {
+        MentoringRecruitmentEntity mentoringRecruitment = mentoringService.findByMentoringRecruitId(m_no);
+        mentoringService.deleteBoard(mentoringRecruitment);
 
         return "success delete";
     }

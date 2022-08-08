@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface MentoringRepository extends JpaRepository<MentoringRecruitmentEntity, Long> {
+public interface MentoringRecruitmentRepository extends JpaRepository<MentoringRecruitmentEntity, Long> {
     List<MentoringRecruitmentEntity> findByTitleContaining(String keyword);
 
     @Query("select p from MentoringRecruitmentEntity p where p.field In(:field) and p.region In(:region) and p.m_period In(:m_period) and p.way In(:way)")
