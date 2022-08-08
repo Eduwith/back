@@ -25,12 +25,12 @@ public class MentoringServiceImpl implements MentoringService {
     private final MentoringRepository mr;
 
     //멘토링 작성 글 생성
-    public String saveMentoringRecruit(MentoringRecruitSaveDto dto){
+    public Long saveMentoringRecruit(MentoringRecruitSaveDto dto){
         //UserEntity userEntity = userService.getUserFromAuth();
         //dto.setUser(userEntity);
 
         MentoringRecruitmentEntity board = mr.save(dto.toEntity());
-        return board.getEmail();
+        return board.getM_no();
     }
 
     //멘토링 작성 글 하나 가져옴

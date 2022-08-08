@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "usertest7")
+@Table(name = "user")
 public class UserEntity implements UserDetails {
 
 
@@ -46,8 +46,8 @@ public class UserEntity implements UserDetails {
     @Column(name = "address")
     private String address;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    public List<MentoringRecruitmentEntity> mentoringRecruitments = new ArrayList<>();
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//    public List<MentoringRecruitmentEntity> mentoringRecruitments = new ArrayList<>();
 
 //    public void newMentoringRecruitment(MentoringRecruitmentEntity m){
 //        this.mentoringRecruitments.

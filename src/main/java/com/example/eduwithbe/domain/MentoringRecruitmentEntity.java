@@ -45,9 +45,9 @@ public class MentoringRecruitmentEntity {
     @Column(nullable = false, length = 200)
     private String info;
 
-    @ManyToOne
-    @JoinColumn(name = "User_Email")
-    private UserEntity user;
+//    @ManyToOne
+//    @JoinColumn(name = "User_Email")
+//    private UserEntity user;
 
 
     private String email;

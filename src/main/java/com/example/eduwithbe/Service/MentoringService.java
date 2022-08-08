@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public interface MentoringService {
 
-    String saveMentoringRecruit(MentoringRecruitSaveDto dto);
+    Long saveMentoringRecruit(MentoringRecruitSaveDto dto);
 
     List<MentoringRecruitmentEntity> findByTitleContaining(String keyword);
 

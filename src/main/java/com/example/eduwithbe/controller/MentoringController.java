@@ -22,11 +22,9 @@ public class MentoringController {
 
     //멘토링 작성 글 저장
     @PostMapping(value = "/recruitment")
-    public String saveBoard(@RequestBody MentoringRecruitSaveDto saveBoardDto) {
-        System.out.println("==========" + saveBoardDto.getField());
+    public Long saveBoard(@RequestBody MentoringRecruitSaveDto saveBoardDto) {
         return mentoringService.saveMentoringRecruit(saveBoardDto);
     }
-
 
     //멘토링 작성 글 하나 찾기
     @GetMapping(value = "/{boardId}")
