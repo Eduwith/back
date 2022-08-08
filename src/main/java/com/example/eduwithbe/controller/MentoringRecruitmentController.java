@@ -4,9 +4,11 @@ import com.example.eduwithbe.Service.MentoringApplyService;
 import com.example.eduwithbe.Service.MentoringRecruitmentService;
 import com.example.eduwithbe.domain.MentoringRecruitmentEntity;
 import com.example.eduwithbe.dto.MentoringApplySaveDto;
+import com.example.eduwithbe.dto.MentoringMentorMenteeDto;
 import com.example.eduwithbe.dto.MentoringRecruitSaveDto;
 import com.example.eduwithbe.dto.MentoringRecruitSearch;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,7 +17,7 @@ import java.util.Objects;
 @RequestMapping(value = "/mentoring")
 @RequiredArgsConstructor
 @RestController
-public class MentoringController {
+public class MentoringRecruitmentController {
 
     private final MentoringRecruitmentService mentoringService;
 
@@ -61,6 +63,16 @@ public class MentoringController {
         List<MentoringRecruitmentEntity> list = mentoringService.findByTitleContaining(keyword);
         if(list.isEmpty()) return null;
         return list;
+    }
+
+    //마이페이지 멘토 멘티 글
+    @GetMapping("/mypage/mentoring")
+    public MentoringMentorMenteeDto findByMentorAndMentee(@RequestParam(required = false, defaultValue = "") String email){
+        List<MentoringRecruitSearch> mentor = mentoringService.findByMentoringMentor(email);
+        List<MentoringRecruitSearch> mentee = mentoringService.findByMentoringMentee(email);
+        System.out.println(mentor);
+        System.out.println(mentee);
+        return MentoringMentorMenteeDto.builder().mentor(mentor).mentee(mentee).build();
     }
 
     //필터 검색
@@ -120,7 +132,7 @@ public class MentoringController {
         }else{
             wayList = List.of(way);
         }
-        System.out.println(field + region + m_period + way);
+
         return mentoringService.findByFilter(fieldList, regionList, periodList, wayList);
 
 

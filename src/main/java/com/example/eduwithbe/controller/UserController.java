@@ -8,6 +8,7 @@ import com.example.eduwithbe.repository.UserRepository;
 import com.example.eduwithbe.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.support.ManagedMap;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -50,7 +51,7 @@ public class UserController {
 
     // 로그인
     @PostMapping("/user/login")
-    public String login(@RequestBody @Validated UserLoginDTO user) {
+    public Map<String,String> login(@RequestBody @Validated UserLoginDTO user) {
         System.out.println("========="+user.getEmail());
         UserEntity member = userRepository.findByEmail(user.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 E-MAIL 입니다."));
@@ -59,7 +60,12 @@ public class UserController {
         }
         String s = jwtTokenProvider.createToken(member.getUsername(), member.getAuthorities());
         System.out.println(s);
-        return s;
+
+        Map<String, String> map = new ManagedMap<>();
+        map.put("token", s);
+        map.put("email", user.getEmail());
+
+        return map;
     }
 
 //    @GetMapping("join") //회원가입 페이지 요청 //todo 링크 바꿈

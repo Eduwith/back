@@ -19,6 +19,6 @@ public class MentoringApplyServiceImpl implements MentoringApplyService{
     @Override
     public String saveMentoringApply(MentoringApplySaveDto dto) {
         MentoringApplyEntity mentoringApply = mr.save(dto.toEntity());
-        return "신청완료되었습니다.";
+        return "OK";
     }
 }

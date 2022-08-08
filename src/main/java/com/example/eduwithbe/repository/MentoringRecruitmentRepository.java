@@ -17,6 +17,12 @@ public interface MentoringRecruitmentRepository extends JpaRepository<MentoringR
 
     @Query("select p from MentoringRecruitmentEntity p where p.field In(:field) and p.region In(:region) and p.m_period In(:m_period) and p.way In(:way)")
     List<MentoringRecruitmentEntity> findByFilter(@Param("field") List<String> field, @Param("region") List<String> region, @Param("m_period") List<Integer> m_period, @Param("way") List<String> way);
+
+    @Query("select m from MentoringRecruitmentEntity m where m.email = :email and m.role = 'O'")
+    List<MentoringRecruitmentEntity> findByMentoringMentor(@Param("email") String email);
+
+    @Query("select m from MentoringRecruitmentEntity m where m.email = :email and m.role = 'E'")
+    List<MentoringRecruitmentEntity> findByMentoringMentee(@Param("email") String email);
 }
 
 

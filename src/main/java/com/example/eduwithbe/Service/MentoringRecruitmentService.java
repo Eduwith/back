@@ -23,5 +23,9 @@ public interface MentoringRecruitmentService {
 
     void deleteBoard(MentoringRecruitmentEntity board);
 
+    List<MentoringRecruitSearch> findByMentoringMentor(String email);
+
+    List<MentoringRecruitSearch> findByMentoringMentee(String email);
+
     List<MentoringRecruitSearch> findByFilter(List<String> field, List<String> region, List<Integer> m_period, List<String> way);
 }

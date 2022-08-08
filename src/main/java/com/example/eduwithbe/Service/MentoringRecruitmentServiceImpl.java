@@ -3,6 +3,7 @@ package com.example.eduwithbe.Service;
 import com.example.eduwithbe.domain.MentoringApplyEntity;
 import com.example.eduwithbe.domain.MentoringRecruitmentEntity;
 import com.example.eduwithbe.dto.MentoringApplySaveDto;
+import com.example.eduwithbe.dto.MentoringMentorMenteeDto;
 import com.example.eduwithbe.dto.MentoringRecruitSaveDto;
 import com.example.eduwithbe.dto.MentoringRecruitSearch;
 import com.example.eduwithbe.repository.MentoringRecruitmentRepository;
@@ -59,7 +60,26 @@ public class MentoringRecruitmentServiceImpl implements MentoringRecruitmentServ
     public List<MentoringRecruitmentEntity> findByTitleContaining(String keyword) {
         return mr.findByTitleContaining(keyword);
     }
-    private String field;
+
+    //마이페이지 멘토링 글 목록 - 멘토
+    public List<MentoringRecruitSearch> findByMentoringMentor(String email) {
+
+        List<MentoringRecruitmentEntity> mentoringRecruitmentEntities = mr.findByMentoringMentor(email);
+
+        return mentoringRecruitmentEntities.stream()
+                .map(MentoringRecruitSearch::new)
+                .collect(Collectors.toList());
+    }
+
+    //마이페이지 멘토링 글 목록 - 멘티
+    public List<MentoringRecruitSearch> findByMentoringMentee(String email) {
+
+        List<MentoringRecruitmentEntity> mentoringRecruitmentEntities = mr.findByMentoringMentee(email);
+
+        return mentoringRecruitmentEntities.stream()
+                .map(MentoringRecruitSearch::new)
+                .collect(Collectors.toList());
+    }
 
     //필터 검색
     public List<MentoringRecruitSearch> findByFilter(List<String> field, List<String> region, List<Integer> m_period, List<String> way) {
