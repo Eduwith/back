@@ -19,7 +19,6 @@ public class MentoringRecruitSaveDto {
     private String role;
     private String field;
     private String region;
-    private String r_period;
     private int m_period;
     private String way;
     private String keyword;
@@ -35,7 +34,6 @@ public class MentoringRecruitSaveDto {
                 .role(role)
                 .field(field)
                 .region(region)
-                .r_period(r_period)
                 .m_period(m_period)
                 .way(way)
                 .keyword(keyword)
