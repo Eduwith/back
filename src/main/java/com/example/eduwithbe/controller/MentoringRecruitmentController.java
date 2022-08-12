@@ -1,17 +1,17 @@
 package com.example.eduwithbe.controller;
 
-import com.example.eduwithbe.Service.MentoringApplyService;
 import com.example.eduwithbe.Service.MentoringRecruitmentService;
 import com.example.eduwithbe.domain.MentoringRecruitmentEntity;
-import com.example.eduwithbe.dto.MentoringApplySaveDto;
 import com.example.eduwithbe.dto.MentoringMentorMenteeDto;
+import com.example.eduwithbe.dto.MentoringRecruitListDto;
 import com.example.eduwithbe.dto.MentoringRecruitSaveDto;
-import com.example.eduwithbe.dto.MentoringRecruitSearch;
+import com.example.eduwithbe.dto.MentoringRecruitSearchDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @RequestMapping(value = "/mentoring")
@@ -23,8 +23,9 @@ public class MentoringRecruitmentController {
 
     //멘토링 작성 글 저장
     @PostMapping(value = "/recruitment")
-    public Long saveBoard(@RequestBody MentoringRecruitSaveDto saveBoardDto) {
-        return mentoringService.saveMentoringRecruit(saveBoardDto);
+    public MentoringRecruitmentEntity saveBoard(@RequestBody MentoringRecruitSaveDto saveBoardDto) {
+        MentoringRecruitmentEntity mentoringRecruitment = mentoringService.saveMentoringRecruit(saveBoardDto);
+        return mentoringRecruitment;
     }
 
     //멘토링 작성 글 하나 찾기
@@ -36,16 +37,32 @@ public class MentoringRecruitmentController {
 
     //멘토링 작성 글 전체 찾기
     @GetMapping(value = "/list")
-    public List<MentoringRecruitmentEntity> findAllBoard() {
-        return mentoringService.findAllBoard();
+    public List<MentoringRecruitListDto> findAllMentoring() {
+        return mentoringService.findAllMentoringRecruitment();
+    }
+
+    //멘토링 작성 글 - 멘토
+    @GetMapping(value = "/mentor")
+    public List<MentoringRecruitListDto> findAllMentoringMentor() {
+        return mentoringService.findByMentoringMentor();
+    }
+
+    //멘토링 작성 글 - 멘티
+    @GetMapping(value = "/mentee")
+    public List<MentoringRecruitListDto> findAllMentoringMentee() {
+        return mentoringService.findByMentoringMentee();
     }
 
     //멘토링 작성 글 수정
     @PatchMapping(value = "/{m_no}")
-    public String updateBoard(@PathVariable Long m_no, @RequestBody MentoringRecruitSaveDto saveBoardDto) {
+    public Map<String, String> updateBoard(@PathVariable Long m_no, @RequestBody MentoringRecruitSaveDto saveBoardDto) {
         MentoringRecruitmentEntity mentoringRecruitment = mentoringService.findByMentoringRecruitId(m_no);
-        MentoringRecruitmentEntity updatedBoard = mentoringService.updateBoard(mentoringRecruitment, saveBoardDto);
-        return updatedBoard.toString();
+        mentoringRecruitment.updateBoard(saveBoardDto);
+        //MentoringRecruitmentEntity updatedBoard = mentoringService.updateBoard(mentoringRecruitment, saveBoardDto);
+
+        Map<String, String> map = new HashMap<>();
+        map.put("result", "SUCCESS");
+        return map;
     }
 
     //멘토링 작성 글 삭제
@@ -59,17 +76,15 @@ public class MentoringRecruitmentController {
 
     //키워드 검색
     @GetMapping("/search/{keyword}")
-    public List<MentoringRecruitmentEntity> findByTitleContaining(@PathVariable String keyword) {
-        List<MentoringRecruitmentEntity> list = mentoringService.findByTitleContaining(keyword);
-        if(list.isEmpty()) return null;
-        return list;
+    public List<MentoringRecruitListDto> findByTitleContaining(@PathVariable String keyword) {
+        return mentoringService.findByTitleContaining(keyword);
     }
 
     //마이페이지 멘토 멘티 글
     @GetMapping("/mypage/mentoring")
     public MentoringMentorMenteeDto findByMentorAndMentee(@RequestParam(required = false, defaultValue = "") String email){
-        List<MentoringRecruitSearch> mentor = mentoringService.findByMentoringMentor(email);
-        List<MentoringRecruitSearch> mentee = mentoringService.findByMentoringMentee(email);
+        List<MentoringRecruitSearchDto> mentor = mentoringService.findByEmailMentoringMentor(email);
+        List<MentoringRecruitSearchDto> mentee = mentoringService.findByEmailMentoringMentee(email);
         System.out.println(mentor);
         System.out.println(mentee);
         return MentoringMentorMenteeDto.builder().mentor(mentor).mentee(mentee).build();
@@ -77,7 +92,7 @@ public class MentoringRecruitmentController {
 
     //필터 검색
     @GetMapping("/search/filter")
-    public List<MentoringRecruitSearch> searchByFilter(@RequestParam(required = false, defaultValue = "") String field, @RequestParam(required = false, defaultValue = "") String region, @RequestParam(required = false, defaultValue = "1") int m_period, @RequestParam(required = false, defaultValue = "") String way){
+    public List<MentoringRecruitListDto> searchByFilter(@RequestParam(required = false, defaultValue = "") String field, @RequestParam(required = false, defaultValue = "") String region, @RequestParam(required = false, defaultValue = "1") int m_period, @RequestParam(required = false, defaultValue = "") String way){
         List<String> fieldList;
         if(Objects.equals(field, "")){
             fieldList = List.of("진로", "교육", "문화예술스포츠", "기타");

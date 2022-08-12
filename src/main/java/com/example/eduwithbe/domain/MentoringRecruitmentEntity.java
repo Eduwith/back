@@ -4,6 +4,8 @@ import com.example.eduwithbe.dto.MentoringRecruitSaveDto;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @NoArgsConstructor
@@ -31,9 +33,6 @@ public class MentoringRecruitmentEntity {
     private String region;
 
     @Column(nullable = false)
-    private String r_period;
-
-    @Column(nullable = false)
     private int m_period;
 
     @Column(nullable = false, length = 4)
@@ -49,6 +48,8 @@ public class MentoringRecruitmentEntity {
 //    @JoinColumn(name = "User_Email")
 //    private UserEntity user;
 
+    @OneToMany(mappedBy = "m_no", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<MentoringApplyEntity> MentoringApply = new ArrayList<>();
 
     private String email;
 
@@ -59,7 +60,6 @@ public class MentoringRecruitmentEntity {
         this.role = dto.getRole();
         this.field = dto.getField();
         this.region = dto.getRegion();
-        this.r_period = dto.getR_period();
         this.m_period = dto.getM_period();
         this.way = dto.getWay();
         this.keyword = dto.getKeyword();

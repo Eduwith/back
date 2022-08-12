@@ -1,6 +1,5 @@
 package com.example.eduwithbe.dto;
 
-import com.example.eduwithbe.domain.MentoringRecruitmentEntity;
 import lombok.*;
 
 import java.util.List;
@@ -10,11 +9,11 @@ import java.util.List;
 //@AllArgsConstructor
 @NoArgsConstructor
 public class MentoringMentorMenteeDto {
-    private List<MentoringRecruitSearch> mentor;
-    private List<MentoringRecruitSearch> mentee;
+    private List<MentoringRecruitSearchDto> mentor;
+    private List<MentoringRecruitSearchDto> mentee;
 
     @Builder
-    public MentoringMentorMenteeDto(List<MentoringRecruitSearch> mentor, List<MentoringRecruitSearch> mentee) {
+    public MentoringMentorMenteeDto(List<MentoringRecruitSearchDto> mentor, List<MentoringRecruitSearchDto> mentee) {
         this.mentor = mentor;
         this.mentee = mentee;
     }
