@@ -49,7 +49,7 @@ public class MentoringRecruitmentEntity {
 //    private UserEntity user;
 
     @OneToMany(mappedBy = "m_no", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<MentoringApplyEntity> MentoringApply = new ArrayList<>();
+    private final List<MentoringApplyEntity> MentoringApply = new ArrayList<>();
 
     private String email;
 

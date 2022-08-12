@@ -8,6 +8,8 @@ import com.example.eduwithbe.repository.UserRepository;
 import com.example.eduwithbe.security.JwtService;
 import com.example.eduwithbe.security.JwtTokenProvider;
 import com.example.eduwithbe.security.Token;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.ManagedMap;
@@ -22,6 +24,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 
+@Api(tags = {"UserController"})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
@@ -39,6 +42,7 @@ public class UserController {
 
 
     // 회원가입
+    @ApiOperation(value = "회원가입")
     @PostMapping("/join")
     public Map<String, Object> join(@RequestBody UserSaveDTO user) {
         //user.setRoles(Collections.singletonList("ROLE_USER"));
