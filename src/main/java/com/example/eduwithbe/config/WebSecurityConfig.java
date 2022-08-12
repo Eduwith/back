@@ -23,6 +23,20 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private static final String[] PERMIT_URL_ARRAY = {
+            /* swagger v2 */
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            /* swagger v3 */
+            "/v3/api-docs/**",
+            "/swagger-ui/**"
+    };
+
     private final UserService userService;
 
     @Autowired
@@ -52,12 +66,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         //http.httpBasic().disable();
         http.cors().disable()
-                .csrf().disable().httpBasic().disable()
+                .csrf().disable()
+
                 .authorizeRequests()
-                //.antMatchers("/**").permitAll()
+//                .antMatchers("/**").permitAll()
+                .antMatchers(PERMIT_URL_ARRAY).permitAll()
                 .antMatchers("/test").authenticated()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user/**").permitAll()
+                .antMatchers("/main/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
