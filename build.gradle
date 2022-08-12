@@ -19,33 +19,27 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.7.0'
-
-    implementation 'org.springframework.boot:spring-boot-starter-web:2.7.0'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.7.2'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.7.2'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
-
-
-
     compileOnly 'org.projectlombok:lombok:1.18.24'
 
     //DB
-    runtimeOnly 'mysql:mysql-connector-java:8.0.29'
+    runtimeOnly 'mysql:mysql-connector-java:8.0.30'
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.0'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools:2.7.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.2'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools:2.7.2'
 
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:2.7.0'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:2.7.2'
 
     //validation
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.5.2'
 
     //security
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-    }
-    testImplementation 'org.springframework.security:spring-security-test'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test:5.7.2'
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    implementation 'org.springframework.boot:spring-boot-starter-security:2.7.2'
+
 
     //lombok
     annotationProcessor 'org.projectlombok:lombok:1.18.24'

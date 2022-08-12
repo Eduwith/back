@@ -17,7 +17,9 @@ public class MentoringApplyEntity {
     @Column(name = "apply_no")
     private Long apply_no;
 
-    private Long m_no;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "m_no")
+    private MentoringRecruitmentEntity m_no;
 
     private String email;
 
