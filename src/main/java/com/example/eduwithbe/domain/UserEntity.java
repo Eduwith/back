@@ -49,6 +49,24 @@ public class UserEntity implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     public List<MentoringRecruitmentEntity> mentoringRecruitments = new ArrayList<>();
 
+    // === 사용자-스터디 모집글 관계 설정 === //
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public List<StudyRecruitment> studyRecruitments = new ArrayList<>();
+
+    // 모집글 작성
+    public void addStudyRecruitment(StudyRecruitment study) {
+        this.studyRecruitments.add(study);
+    }
+
+//    // === 사용자-스터디 지원 관계 설정 === //
+//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    public List<StudyApply> studyApplies = new ArrayList<>();
+//
+//    // 지원 정보 작성
+//    public void addStudyApplies(StudyApply apply) {
+//        this.studyApplies.add(apply);
+//    }
+
 //    public void newMentoringRecruitment(MentoringRecruitmentEntity m){
 //        this.mentoringRecruitments.
 //    }
