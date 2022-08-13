@@ -1,10 +1,13 @@
 package com.example.eduwithbe.mentoring.repository;
 
 import com.example.eduwithbe.mentoring.domain.MentoringRecruitmentEntity;
+import com.example.eduwithbe.mentoring.dto.MentoringRecruitUpdateDto;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,6 +29,11 @@ public interface MentoringRecruitmentRepository extends JpaRepository<MentoringR
 
     @Query("select m from MentoringRecruitmentEntity m where m.role = 'E'")
     List<MentoringRecruitmentEntity> findByMentoringMentee();
+
+    @Transactional
+    @Modifying
+    @Query("update MentoringRecruitmentEntity m set m.title = :title, m.role = :role, m.field = :field, m.region = :region, m.m_period = :m_period, m.way = :way, m.keyword = :keyword, m.info = :info where m.m_no = :m_no")
+    void updateByMentoringRecruit(Long m_no, String title, String role, String field, String region, int m_period, String way, String keyword, String info);
 
     //select * from (select * from mentoring_recruitment m where m.email = '123@gmail.com' and m.role = 'E') AS r left join  mentoring_apply a on a.m_no = r.m_no ;
 }

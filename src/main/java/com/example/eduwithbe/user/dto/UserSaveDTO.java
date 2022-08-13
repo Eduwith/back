@@ -8,8 +8,8 @@ import java.util.List;
 @Data
 @Getter
 @Setter
-@NoArgsConstructor // 기본 생성자 생성
-@AllArgsConstructor // 모든 필드를 매개변수로 하는 생성자 생성
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserSaveDTO {
 
     private String email;

@@ -1,5 +1,6 @@
 package com.example.eduwithbe.mentoring.service;
 
+import com.example.eduwithbe.mentoring.dto.MentoringRecruitUpdateDto;
 import com.example.eduwithbe.user.service.UserService;
 import com.example.eduwithbe.mentoring.domain.MentoringRecruitmentEntity;
 import com.example.eduwithbe.mentoring.dto.MentoringRecruitListDto;
@@ -47,9 +48,9 @@ public class MentoringRecruitmentServiceImpl implements MentoringRecruitmentServ
     }
 
     //멘토링 작성 글 하나 수정
-    public MentoringRecruitmentEntity updateBoard(MentoringRecruitmentEntity board, MentoringRecruitSaveDto saveBoardDto) {
-        board.updateBoard(saveBoardDto);
-        return board;
+    public void updateMentoringRecruitment(Long m_no, MentoringRecruitUpdateDto updateDto) {
+        mr.updateByMentoringRecruit(m_no, updateDto.getTitle(), updateDto.getRole(), updateDto.getField()
+            ,updateDto.getRegion(), updateDto.getM_period(), updateDto.getWay(), updateDto.getKeyword(), updateDto.getInfo());
     }
 
     //멘토링 작성 글 하나 삭제

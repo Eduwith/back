@@ -4,6 +4,7 @@ import com.example.eduwithbe.mentoring.domain.MentoringRecruitmentEntity;
 import com.example.eduwithbe.mentoring.dto.MentoringRecruitListDto;
 import com.example.eduwithbe.mentoring.dto.MentoringRecruitSaveDto;
 import com.example.eduwithbe.mentoring.dto.MentoringRecruitSearchDto;
+import com.example.eduwithbe.mentoring.dto.MentoringRecruitUpdateDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public interface MentoringRecruitmentService {
 
     List<MentoringRecruitListDto> findAllMentoringRecruitment();
 
-    MentoringRecruitmentEntity updateBoard(MentoringRecruitmentEntity board, MentoringRecruitSaveDto saveBoardDto);
+    void updateMentoringRecruitment(Long m_no, MentoringRecruitUpdateDto updateDto);
 
     void deleteMentoringRecruit(MentoringRecruitmentEntity board);
 
