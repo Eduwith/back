@@ -1,12 +1,11 @@
-package com.example.eduwithbe.domain;
+package com.example.eduwithbe.user.domain;
 
-import com.example.eduwithbe.dto.UserSaveDTO;
+import com.example.eduwithbe.domain.StudyRecruitment;
+import com.example.eduwithbe.user.dto.UserSaveDTO;
 import lombok.*;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.ArrayList;

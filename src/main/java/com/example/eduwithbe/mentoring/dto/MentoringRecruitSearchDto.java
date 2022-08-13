@@ -1,7 +1,7 @@
-package com.example.eduwithbe.dto;
+package com.example.eduwithbe.mentoring.dto;
 
 
-import com.example.eduwithbe.domain.MentoringRecruitmentEntity;
+import com.example.eduwithbe.mentoring.domain.MentoringRecruitmentEntity;
 import lombok.*;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MentoringRecruitListDto {
+public class MentoringRecruitSearchDto {
     private Long m_no;
     private String title;
     private String role;
@@ -23,12 +23,13 @@ public class MentoringRecruitListDto {
     private String keyword;
     private String info;
     private String name;
+    private List<MentoringApplyAllDto> mentoringApply;
 
     //private UserEntity user;
     //private String email;
 
     @Builder
-    public MentoringRecruitListDto(MentoringRecruitmentEntity me) {
+    public MentoringRecruitSearchDto(MentoringRecruitmentEntity me) {
         this.m_no = me.getM_no();
         this.title = me.getTitle();
         this.role = me.getRole();
@@ -39,5 +40,6 @@ public class MentoringRecruitListDto {
         this.keyword = me.getKeyword();
         this.info = me.getInfo();
         this.name = me.getName();
+        this.mentoringApply = me.getMentoringApply().stream().map(MentoringApplyAllDto::new).collect(Collectors.toList());
     }
 }

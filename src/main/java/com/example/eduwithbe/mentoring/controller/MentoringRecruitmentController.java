@@ -1,14 +1,14 @@
-package com.example.eduwithbe.controller;
+package com.example.eduwithbe.mentoring.controller;
 
-import com.example.eduwithbe.Service.MentoringRecruitmentService;
-import com.example.eduwithbe.domain.MentoringRecruitmentEntity;
-import com.example.eduwithbe.dto.MentoringMentorMenteeDto;
-import com.example.eduwithbe.dto.MentoringRecruitListDto;
-import com.example.eduwithbe.dto.MentoringRecruitSaveDto;
-import com.example.eduwithbe.dto.MentoringRecruitSearchDto;
+import com.example.eduwithbe.mentoring.dto.*;
+import com.example.eduwithbe.mentoring.service.MentoringApplyService;
+import com.example.eduwithbe.mentoring.service.MentoringRecruitmentService;
+import com.example.eduwithbe.mentoring.domain.MentoringRecruitmentEntity;
+import com.example.eduwithbe.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +20,8 @@ import java.util.Objects;
 public class MentoringRecruitmentController {
 
     private final MentoringRecruitmentService mentoringService;
+    private final MentoringApplyService mentoringApplyService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     //멘토링 작성 글 저장
     @PostMapping(value = "/recruitment")
@@ -69,7 +71,7 @@ public class MentoringRecruitmentController {
     @DeleteMapping(value = "/{m_no}")
     public String deleteBoard(@PathVariable Long m_no) {
         MentoringRecruitmentEntity mentoringRecruitment = mentoringService.findByMentoringRecruitId(m_no);
-        mentoringService.deleteBoard(mentoringRecruitment);
+        mentoringService.deleteMentoringRecruit(mentoringRecruitment);
 
         return "success delete";
     }
@@ -80,13 +82,14 @@ public class MentoringRecruitmentController {
         return mentoringService.findByTitleContaining(keyword);
     }
 
+
     //마이페이지 멘토 멘티 글
     @GetMapping("/mypage/mentoring")
-    public MentoringMentorMenteeDto findByMentorAndMentee(@RequestParam(required = false, defaultValue = "") String email){
-        List<MentoringRecruitSearchDto> mentor = mentoringService.findByEmailMentoringMentor(email);
-        List<MentoringRecruitSearchDto> mentee = mentoringService.findByEmailMentoringMentee(email);
-        System.out.println(mentor);
-        System.out.println(mentee);
+    public MentoringMentorMenteeDto findByMentorAndMentee(HttpServletRequest request){
+        String user = jwtTokenProvider.getUserPk(request.getHeader("Authorization"));
+        List<MentoringRecruitSearchDto> mentor = mentoringService.findByEmailMentoringMentor(user);
+        List<MentoringRecruitSearchDto> mentee = mentoringService.findByEmailMentoringMentee(user);
+
         return MentoringMentorMenteeDto.builder().mentor(mentor).mentee(mentee).build();
     }
 

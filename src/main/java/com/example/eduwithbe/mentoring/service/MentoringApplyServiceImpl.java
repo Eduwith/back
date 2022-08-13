@@ -1,19 +1,23 @@
-package com.example.eduwithbe.Service;
+package com.example.eduwithbe.mentoring.service;
 
-import com.example.eduwithbe.domain.MentoringApplyEntity;
-import com.example.eduwithbe.domain.MentoringRecruitmentEntity;
-import com.example.eduwithbe.domain.UserEntity;
-import com.example.eduwithbe.dto.MentoringApplyAllDto;
-import com.example.eduwithbe.dto.MentoringApplySaveDto;
-import com.example.eduwithbe.repository.MentoringApplyRepository;
-import com.example.eduwithbe.repository.MentoringRecruitmentRepository;
-import com.example.eduwithbe.repository.UserRepository;
+import com.example.eduwithbe.mentoring.domain.MentoringApplyEntity;
+import com.example.eduwithbe.mentoring.domain.MentoringRecruitmentEntity;
+import com.example.eduwithbe.mentoring.dto.MentoringApplyEmailDto;
+import com.example.eduwithbe.mentoring.dto.MentoringRecruitListDto;
+import com.example.eduwithbe.user.domain.UserEntity;
+import com.example.eduwithbe.mentoring.dto.MentoringApplyAllDto;
+import com.example.eduwithbe.mentoring.dto.MentoringApplySaveDto;
+import com.example.eduwithbe.mentoring.repository.MentoringApplyRepository;
+import com.example.eduwithbe.mentoring.repository.MentoringRecruitmentRepository;
+import com.example.eduwithbe.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -47,6 +51,16 @@ public class MentoringApplyServiceImpl implements MentoringApplyService {
         return "OK";
     }
 
+    //멘토링 신청 목록
+    @Override
+    public List<MentoringApplyEmailDto> findByEmail(String email) {
+
+        List<MentoringApplyEntity> mentoringRecruitmentEntities = mr.findByEmail(email);
+
+        return mentoringRecruitmentEntities.stream()
+                .map(MentoringApplyEmailDto::new)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public ResponseEntity<MentoringApplyAllDto> retrieveAllComment(Long m_no, String header) {

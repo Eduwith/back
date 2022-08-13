@@ -1,9 +1,9 @@
-package com.example.eduwithbe.Service;
+package com.example.eduwithbe.mentoring.service;
 
-import com.example.eduwithbe.domain.MentoringRecruitmentEntity;
-import com.example.eduwithbe.dto.MentoringRecruitListDto;
-import com.example.eduwithbe.dto.MentoringRecruitSaveDto;
-import com.example.eduwithbe.dto.MentoringRecruitSearchDto;
+import com.example.eduwithbe.mentoring.domain.MentoringRecruitmentEntity;
+import com.example.eduwithbe.mentoring.dto.MentoringRecruitListDto;
+import com.example.eduwithbe.mentoring.dto.MentoringRecruitSaveDto;
+import com.example.eduwithbe.mentoring.dto.MentoringRecruitSearchDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public interface MentoringRecruitmentService {
 
     MentoringRecruitmentEntity updateBoard(MentoringRecruitmentEntity board, MentoringRecruitSaveDto saveBoardDto);
 
-    void deleteBoard(MentoringRecruitmentEntity board);
+    void deleteMentoringRecruit(MentoringRecruitmentEntity board);
 
     List<MentoringRecruitSearchDto> findByEmailMentoringMentor(String email);
 

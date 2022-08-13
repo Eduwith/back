@@ -1,12 +1,10 @@
-package com.example.eduwithbe.Service;
+package com.example.eduwithbe.user.service;
 
-import com.example.eduwithbe.domain.UserEntity;
-import com.example.eduwithbe.dto.UserLoginDTO;
-import com.example.eduwithbe.dto.UserSaveDTO;
-import com.example.eduwithbe.repository.UserRepository;
+import com.example.eduwithbe.user.domain.UserEntity;
+import com.example.eduwithbe.user.dto.UserSaveDTO;
+import com.example.eduwithbe.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -15,7 +13,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service

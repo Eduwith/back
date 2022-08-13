@@ -1,6 +1,6 @@
-package com.example.eduwithbe.repository;
+package com.example.eduwithbe.mentoring.repository;
 
-import com.example.eduwithbe.domain.MentoringRecruitmentEntity;
+import com.example.eduwithbe.mentoring.domain.MentoringRecruitmentEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

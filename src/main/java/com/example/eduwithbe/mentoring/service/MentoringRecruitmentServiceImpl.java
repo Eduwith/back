@@ -1,10 +1,11 @@
-package com.example.eduwithbe.Service;
+package com.example.eduwithbe.mentoring.service;
 
-import com.example.eduwithbe.domain.MentoringRecruitmentEntity;
-import com.example.eduwithbe.dto.MentoringRecruitListDto;
-import com.example.eduwithbe.dto.MentoringRecruitSaveDto;
-import com.example.eduwithbe.dto.MentoringRecruitSearchDto;
-import com.example.eduwithbe.repository.MentoringRecruitmentRepository;
+import com.example.eduwithbe.user.service.UserService;
+import com.example.eduwithbe.mentoring.domain.MentoringRecruitmentEntity;
+import com.example.eduwithbe.mentoring.dto.MentoringRecruitListDto;
+import com.example.eduwithbe.mentoring.dto.MentoringRecruitSaveDto;
+import com.example.eduwithbe.mentoring.dto.MentoringRecruitSearchDto;
+import com.example.eduwithbe.mentoring.repository.MentoringRecruitmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,7 +53,7 @@ public class MentoringRecruitmentServiceImpl implements MentoringRecruitmentServ
     }
 
     //멘토링 작성 글 하나 삭제
-    public void deleteBoard(MentoringRecruitmentEntity board){
+    public void deleteMentoringRecruit(MentoringRecruitmentEntity board){
         mr.delete(board);
     }
 

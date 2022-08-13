@@ -1,10 +1,10 @@
-package com.example.eduwithbe.controller;
+package com.example.eduwithbe.user.controller;
 
-import com.example.eduwithbe.Service.UserService;
-import com.example.eduwithbe.domain.UserEntity;
-import com.example.eduwithbe.dto.UserLoginDTO;
-import com.example.eduwithbe.dto.UserSaveDTO;
-import com.example.eduwithbe.repository.UserRepository;
+import com.example.eduwithbe.user.service.UserService;
+import com.example.eduwithbe.user.domain.UserEntity;
+import com.example.eduwithbe.user.dto.UserLoginDTO;
+import com.example.eduwithbe.user.dto.UserSaveDTO;
+import com.example.eduwithbe.user.repository.UserRepository;
 import com.example.eduwithbe.security.JwtService;
 import com.example.eduwithbe.security.JwtTokenProvider;
 import com.example.eduwithbe.security.Token;
@@ -13,13 +13,11 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.ManagedMap;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.net.http.HttpHeaders;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;

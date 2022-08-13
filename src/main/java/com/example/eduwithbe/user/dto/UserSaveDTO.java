@@ -1,4 +1,4 @@
-package com.example.eduwithbe.dto;
+package com.example.eduwithbe.user.dto;
 
 import lombok.*;
 

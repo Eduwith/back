@@ -1,6 +1,6 @@
-package com.example.eduwithbe.domain;
+package com.example.eduwithbe.mentoring.domain;
 
-import com.example.eduwithbe.dto.MentoringRecruitSaveDto;
+import com.example.eduwithbe.mentoring.dto.MentoringRecruitSaveDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -50,6 +50,9 @@ public class MentoringRecruitmentEntity {
 
     @OneToMany(mappedBy = "m_no", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private final List<MentoringApplyEntity> MentoringApply = new ArrayList<>();
+
+    @OneToMany(mappedBy = "m_no", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private final List<MentoringApplyEntity> Mentoring = new ArrayList<>();
 
     private String email;
 

@@ -1,6 +1,6 @@
-package com.example.eduwithbe.repository;
+package com.example.eduwithbe.user.repository;
 
-import com.example.eduwithbe.domain.UserEntity;
+import com.example.eduwithbe.user.domain.UserEntity;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.JpaRepository;
 
