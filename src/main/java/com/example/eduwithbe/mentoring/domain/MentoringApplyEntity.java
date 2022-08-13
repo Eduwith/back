@@ -1,4 +1,4 @@
-package com.example.eduwithbe.domain;
+package com.example.eduwithbe.mentoring.domain;
 
 import lombok.*;
 
