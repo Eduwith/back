@@ -1,5 +1,8 @@
 package com.example.eduwithbe.user.controller;
 
+import com.example.eduwithbe.mentoring.dto.MentoringApplyEmailDto;
+import com.example.eduwithbe.mentoring.dto.MentoringRecruitUpdateDto;
+import com.example.eduwithbe.user.dto.UserUpdateDto;
 import com.example.eduwithbe.user.service.UserService;
 import com.example.eduwithbe.user.domain.UserEntity;
 import com.example.eduwithbe.user.dto.UserLoginDTO;
@@ -18,9 +21,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Api(tags = {"UserController"})
 @RestController
@@ -33,7 +34,7 @@ public class UserController {
     private final UserRepository userRepository;
 
     @Autowired
-    private UserService ms;
+    private UserService us;
 
     @Autowired
     private JwtService jwtService;
@@ -42,7 +43,7 @@ public class UserController {
     // 회원가입
     @ApiOperation(value = "회원가입")
     @PostMapping("/join")
-    public Map<String, Object> join(@RequestBody UserSaveDTO user) {
+    public @ResponseBody Map<String, Object> join(@RequestBody UserSaveDTO user) {
         //user.setRoles(Collections.singletonList("ROLE_USER"));
         user.setPwd(passwordEncoder.encode(user.getPwd()));
         userRepository.save(UserEntity.builder()
@@ -52,11 +53,13 @@ public class UserController {
                 .age(user.getAge())
                 .address(user.getAddress())
                 .pwd(passwordEncoder.encode(user.getPwd()))
+                .stamp(0)
+                .point(0)
                 .roles(Collections.singletonList("ROLE_USER")) // 최초 가입시 USER 로 설정
                 .build());
 
         Map<String, Object> response;
-        response = ms.save(user);
+        response = us.save(user);
         return response;
     }
 
@@ -77,7 +80,7 @@ public class UserController {
 
     //로그인 체크
     @PostMapping("/loginCheck")
-    public Map<String, String> check(HttpServletRequest request) {
+    public @ResponseBody Map<String, String> check(HttpServletRequest request) {
         String user = jwtTokenProvider.getUserPk(request.getHeader("Authorization"));
 
         Optional<UserEntity> userEntity = userRepository.findByEmail(user);
@@ -87,4 +90,46 @@ public class UserController {
         map.put("name" , userEntity.get().getName());
         return map;
     }
+
+    //출석체크
+    @GetMapping("/cattendance")
+    public @ResponseBody Map<String, String> updateUserPoint(HttpServletRequest request){
+        String user = jwtTokenProvider.getUserPk(request.getHeader("Authorization"));
+        UserEntity userEntity = userRepository.findByEmail(user).orElseThrow(() -> new IllegalArgumentException("신청 실패: 해당 유저가 존재하지 않습니다." + user));
+
+        int point = 0;
+        if(userEntity.getStamp()+1 == 7) point = userEntity.getPoint()+1000;
+        us.updateUserPoint(user, userEntity.getStamp()+1, point);
+
+        Map<String, String> map = new HashMap<>();
+        map.put("result", "SUCCESS");
+        return map;
+    }
+
+    //회원수정
+    @PatchMapping(value = "/edit")
+    public @ResponseBody Map<String, String> updateMentoringRecruit(HttpServletRequest request, @RequestBody UserUpdateDto updateDto) {
+        String user = jwtTokenProvider.getUserPk(request.getHeader("Authorization"));
+        us.updateUser(user, updateDto);
+        //MentoringRecruitmentEntity updatedBoard = mentoringService.updateBoard(mentoringRecruitment, saveBoardDto);
+
+        Map<String, String> map = new HashMap<>();
+        map.put("result", "SUCCESS");
+        return map;
+    }
+
+    //회원탈퇴
+    @DeleteMapping(value = "/Withdrawal")
+    public @ResponseBody Map<String, String> saveMentoringApplyRefuse(HttpServletRequest request) {
+        String user = jwtTokenProvider.getUserPk(request.getHeader("Authorization"));
+        UserEntity userEntity = userRepository.findByEmail(user).orElseThrow(() -> new IllegalArgumentException("신청 실패: 해당 유저가 존재하지 않습니다." + user));
+
+        Map<String, String> map = new HashMap<>();
+        map.put("result", "SUCCESS");
+
+        userRepository.delete(userEntity);
+
+        return map;
+    }
+
 }

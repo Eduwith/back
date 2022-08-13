@@ -1,6 +1,7 @@
 package com.example.eduwithbe.user.domain;
 
 import com.example.eduwithbe.domain.StudyRecruitment;
+import com.example.eduwithbe.mentoring.domain.MentoringApplyEntity;
 import com.example.eduwithbe.user.dto.UserSaveDTO;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -42,6 +43,11 @@ public class UserEntity implements UserDetails {
     @Column(name = "address")
     private String address;
 
+    @Column(nullable = false, columnDefinition = "int default 0")
+    private int stamp;
+
+    @Column(nullable = false, columnDefinition = "int default 0")
+    private int point;
 
     //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 //    public List<MentoringRecruitmentEntity> mentoringRecruitments = new ArrayList<>();
@@ -49,6 +55,8 @@ public class UserEntity implements UserDetails {
     // === 사용자-스터디 모집글 관계 설정 === //
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public List<StudyRecruitment> studyRecruitments = new ArrayList<>();
+
+
 
     // 모집글 작성
     public void addStudyRecruitment(StudyRecruitment study) {
