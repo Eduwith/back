@@ -15,7 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 @ComponentScan(basePackages = {
-        "com.example.eduwithbe.controller"
+        "com.example.eduwithbe.mentoring.controller"
 })
 public class SwaggerConfig {
 
@@ -25,7 +25,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("eduwith-api")
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.example.eduwithbe.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.example.eduwithbe.mentoring.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(this.ShopApiInfo())
