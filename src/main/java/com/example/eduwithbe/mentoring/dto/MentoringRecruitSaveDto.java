@@ -1,13 +1,10 @@
-package com.example.eduwithbe.dto;
+package com.example.eduwithbe.mentoring.dto;
 
-import com.example.eduwithbe.domain.MentoringRecruitmentEntity;
-import com.example.eduwithbe.domain.UserEntity;
+import com.example.eduwithbe.mentoring.domain.MentoringRecruitmentEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.persistence.Column;
 
 @Getter
 @Setter
