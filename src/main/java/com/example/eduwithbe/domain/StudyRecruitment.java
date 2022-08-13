@@ -1,11 +1,10 @@
 package com.example.eduwithbe.domain;
 
+import com.example.eduwithbe.user.domain.UserEntity;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

@@ -1,8 +1,7 @@
 package com.example.eduwithbe.controller;
 
 import com.example.eduwithbe.Service.StudyService;
-import com.example.eduwithbe.Service.UserService;
-import com.example.eduwithbe.domain.UserEntity;
+import com.example.eduwithbe.user.service.UserService;
 import com.example.eduwithbe.dto.StudyRegisterRequestDto;
 import com.example.eduwithbe.dto.StudyResponseDto;
 import com.example.eduwithbe.paging.CommonParams;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.security.Principal;
 import java.util.Map;
 
 @RestController
