@@ -25,16 +25,17 @@ public class MentoringRecruitmentController {
 
     //멘토링 작성 글 저장
     @PostMapping(value = "/recruitment")
-    public MentoringRecruitmentEntity saveBoard(@RequestBody MentoringRecruitSaveDto saveBoardDto) {
+    public MentoringRecruitmentEntity saveMentoringRecruit(@RequestBody MentoringRecruitSaveDto saveBoardDto) {
         MentoringRecruitmentEntity mentoringRecruitment = mentoringService.saveMentoringRecruit(saveBoardDto);
         return mentoringRecruitment;
     }
 
     //멘토링 작성 글 하나 찾기
     @GetMapping(value = "/{m_no}")
-    public String findOneBoard(@PathVariable Long m_no) {
+    public MentoringRecruitDto findOneMentoringRecruit(@PathVariable Long m_no) {
         MentoringRecruitmentEntity mentoringRecruitment = mentoringService.findByMentoringRecruitId(m_no);
-        return mentoringRecruitment.toString();
+
+        return MentoringRecruitDto.builder().me(mentoringRecruitment).build();
     }
 
     //멘토링 작성 글 전체 찾기
