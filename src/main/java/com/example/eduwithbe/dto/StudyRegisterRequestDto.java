@@ -1,9 +1,8 @@
 package com.example.eduwithbe.dto;
 
 import com.example.eduwithbe.domain.StudyRecruitment;
-import com.example.eduwithbe.domain.UserEntity;
+import com.example.eduwithbe.user.domain.UserEntity;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

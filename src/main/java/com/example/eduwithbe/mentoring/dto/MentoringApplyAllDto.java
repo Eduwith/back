@@ -1,12 +1,10 @@
-package com.example.eduwithbe.dto;
+package com.example.eduwithbe.mentoring.dto;
 
-import com.example.eduwithbe.domain.MentoringApplyEntity;
-import com.example.eduwithbe.domain.MentoringRecruitmentEntity;
+import com.example.eduwithbe.mentoring.domain.MentoringApplyEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.extern.java.Log;
 
 @Getter
 @Setter
