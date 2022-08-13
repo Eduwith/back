@@ -2,6 +2,7 @@ package com.example.eduwithbe.user.service;
 
 import com.example.eduwithbe.user.domain.UserEntity;
 import com.example.eduwithbe.user.dto.UserSaveDTO;
+import com.example.eduwithbe.user.dto.UserUpdateDto;
 import com.example.eduwithbe.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import java.util.Map;
 public class UserService {
 
     @Autowired
-    private final UserRepository mr;
+    private final UserRepository ur;
 
     SimpleDateFormat format = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:sss");
     Date time = new Date();
@@ -34,7 +35,7 @@ public class UserService {
         if (userEntity.getEmail() != null & userEntity.getPwd() != null
                 & userEntity.getAge() != 0 & userEntity.getName() != null
                 & (userEntity.getGender() == 'M' || userEntity.getGender() == 'F')) {
-            mr.save(userEntity);
+            ur.save(userEntity);
             response.put("result", "SUCCESS");
             response.put("user", userEntity);
         } else {
@@ -44,6 +45,13 @@ public class UserService {
         return response;
     }
 
+    public void updateUser(String email, UserUpdateDto userUpdateDto) {
+        ur.updateByUser(email, userUpdateDto.getName(), userUpdateDto.getPwd(), userUpdateDto.getAddress());
+    }
+
+    public void updateUserPoint(String email, int stamp, int point) {
+        ur.updateByUserPoint(email, stamp, point);
+    }
 
     public UserEntity getUserFromAuth(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
