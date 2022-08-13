@@ -58,9 +58,8 @@ public class MentoringRecruitmentController {
 
     //멘토링 작성 글 수정
     @PatchMapping(value = "/{m_no}")
-    public Map<String, String> updateBoard(@PathVariable Long m_no, @RequestBody MentoringRecruitSaveDto saveBoardDto) {
-        MentoringRecruitmentEntity mentoringRecruitment = mentoringService.findByMentoringRecruitId(m_no);
-        mentoringRecruitment.updateBoard(saveBoardDto);
+    public @ResponseBody Map<String, String> updateMentoringRecruit(@PathVariable Long m_no, @RequestBody MentoringRecruitUpdateDto updateDto) {
+        mentoringService.updateMentoringRecruitment(m_no, updateDto);
         //MentoringRecruitmentEntity updatedBoard = mentoringService.updateBoard(mentoringRecruitment, saveBoardDto);
 
         Map<String, String> map = new HashMap<>();
