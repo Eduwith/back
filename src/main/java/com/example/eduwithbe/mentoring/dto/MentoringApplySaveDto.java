@@ -14,12 +14,14 @@ import lombok.Setter;
 public class MentoringApplySaveDto {
     private MentoringRecruitmentEntity m_no;
     private String email;
+    private String name;
     private String result;
 
     public MentoringApplyEntity toEntity(){
         return MentoringApplyEntity.builder()
                 .m_no(m_no)
                 .email(email)
+                .name(name)
                 .result("0")
                 .build();
     }

@@ -4,6 +4,7 @@ package com.example.eduwithbe.mentoring.controller;
 import com.example.eduwithbe.mentoring.domain.MentoringApplyEntity;
 import com.example.eduwithbe.mentoring.dto.MentoringApplyEmailDto;
 import com.example.eduwithbe.mentoring.dto.MentoringRecruitDto;
+import com.example.eduwithbe.mentoring.dto.ResultResponse;
 import com.example.eduwithbe.mentoring.repository.MentoringApplyRepository;
 import com.example.eduwithbe.mentoring.service.MentoringApplyService;
 import com.example.eduwithbe.mentoring.service.MentoringService;
@@ -39,56 +40,35 @@ public class MentoringApplyController {
 
     //멘토링 멘티/멘토 지원
     @GetMapping(value = "/mentoring/{m_no}/apply")
-    public Map<String, String> saveMentoringApply(HttpServletRequest request, @PathVariable Long m_no) {
+    public ResultResponse saveMentoringApply(HttpServletRequest request, @PathVariable Long m_no) {
         String user = jwtTokenProvider.getUserPk(request.getHeader("Authorization"));
-
-        Map<String, String> map = new HashMap<>();
-        map.put("result", "SUCCESS");
-
         mentoringApplyService.saveMentoringApply(user, m_no);
-
-        return map;
+        return new ResultResponse();
     }
 
     //멘토링 신청 수락
     @GetMapping(value = "/mypage/{m_no}/apply/{apply_no}")
-    public Map<String, String> saveMentoringApplyAccept(HttpServletRequest request, @PathVariable Long m_no, @PathVariable Long apply_no) {
+    public ResultResponse saveMentoringApplyAccept(HttpServletRequest request, @PathVariable Long m_no, @PathVariable Long apply_no) {
         String user = jwtTokenProvider.getUserPk(request.getHeader("Authorization"));
-
-        Map<String, String> map = new HashMap<>();
-        map.put("result", "SUCCESS");
-
         mentoringService.saveMentoring(user, m_no, apply_no);
-
-        return map;
+        return new ResultResponse();
     }
 
     //멘토링 신청 거절
     @DeleteMapping(value = "/mypage/{m_no}/apply/{apply_no}")
-    public Map<String, String> saveMentoringApplyRefuse(HttpServletRequest request, @PathVariable Long m_no, @PathVariable Long apply_no) {
-        String user = jwtTokenProvider.getUserPk(request.getHeader("Authorization"));
-
-        Map<String, String> map = new HashMap<>();
-        map.put("result", "SUCCESS");
-
+    public ResultResponse saveMentoringApplyRefuse(@PathVariable Long m_no, @PathVariable Long apply_no) {
         mentoringService.deleteMentoring(apply_no);
-
-        return map;
+        return new ResultResponse();
     }
 
     //멘토링 신청 취소
     @DeleteMapping(value = "/mypage/apoply/{apply_no}")
-    public Map<String, String> saveMentoringApplyRefuse(HttpServletRequest request, @PathVariable Long apply_no) {
-        String user = jwtTokenProvider.getUserPk(request.getHeader("Authorization"));
-
-        Map<String, String> map = new HashMap<>();
-        map.put("result", "SUCCESS");
-
+    public ResultResponse saveMentoringApplyRefuse(@PathVariable Long apply_no) {
         mentoringService.deleteMentoring(apply_no);
-
-        return map;
+        return new ResultResponse();
     }
 
+    //멘토링 신청 유저 프로필
     @GetMapping(value = "/mypage/{apply_no}/profile")
     public UserMentoringApplyDetailDTO findOneApplyUser(@PathVariable Long apply_no) {
         Optional<MentoringApplyEntity> mentoringApply = mentoringApplyRepository.findById(apply_no);
