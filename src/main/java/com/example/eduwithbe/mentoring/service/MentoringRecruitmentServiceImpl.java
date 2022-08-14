@@ -1,17 +1,17 @@
 package com.example.eduwithbe.mentoring.service;
 
-import com.example.eduwithbe.mentoring.dto.MentoringRecruitUpdateDto;
+import com.example.eduwithbe.mentoring.dto.*;
+import com.example.eduwithbe.user.domain.UserEntity;
+import com.example.eduwithbe.user.repository.UserRepository;
 import com.example.eduwithbe.user.service.UserService;
 import com.example.eduwithbe.mentoring.domain.MentoringRecruitmentEntity;
-import com.example.eduwithbe.mentoring.dto.MentoringRecruitListDto;
-import com.example.eduwithbe.mentoring.dto.MentoringRecruitSaveDto;
-import com.example.eduwithbe.mentoring.dto.MentoringRecruitSearchDto;
 import com.example.eduwithbe.mentoring.repository.MentoringRecruitmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,18 +19,26 @@ import java.util.stream.Collectors;
 public class MentoringRecruitmentServiceImpl implements MentoringRecruitmentService {
 
     @Autowired
-    private final UserService userService;
-
-    @Autowired
     private final MentoringRecruitmentRepository mr;
+    private final UserRepository userRepository;
 
     //멘토링 작성 글 생성
-    public MentoringRecruitmentEntity saveMentoringRecruit(MentoringRecruitSaveDto dto){
-        //UserEntity userEntity = userService.getUserFromAuth();
-        //dto.setUser(userEntity);
+    public MentoringRecruitmentEntity saveMentoringRecruit(String user, MentoringRecruitSaveDto dto){
+        UserEntity userEntity = userRepository.findByEmail(user).orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다." + user));
+        MentoringRecruitSaveUserDto mentoringRecruitSaveUserDto = new MentoringRecruitSaveUserDto();
+        mentoringRecruitSaveUserDto.setUser(userEntity);
+        mentoringRecruitSaveUserDto.setField(dto.getField());
+        mentoringRecruitSaveUserDto.setInfo(dto.getInfo());
+        mentoringRecruitSaveUserDto.setRegion(dto.getRegion());
+        mentoringRecruitSaveUserDto.setKeyword(dto.getKeyword());
+        mentoringRecruitSaveUserDto.setRole(dto.getRole());
+        mentoringRecruitSaveUserDto.setM_period(dto.getM_period());
+        mentoringRecruitSaveUserDto.setTitle(dto.getTitle());
+        mentoringRecruitSaveUserDto.setWay(dto.getWay());
 
-        MentoringRecruitmentEntity board = mr.save(dto.toEntity());
-        return board;
+        MentoringRecruitmentEntity mentoringRecruit = mentoringRecruitSaveUserDto.toEntity();
+        mr.save(mentoringRecruit);
+        return mentoringRecruit;
     }
 
     //멘토링 작성 글 하나 가져옴

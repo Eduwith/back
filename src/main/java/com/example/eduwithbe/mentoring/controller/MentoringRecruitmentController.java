@@ -5,14 +5,13 @@ import com.example.eduwithbe.mentoring.service.MentoringApplyService;
 import com.example.eduwithbe.mentoring.service.MentoringRecruitmentService;
 import com.example.eduwithbe.mentoring.domain.MentoringRecruitmentEntity;
 import com.example.eduwithbe.security.JwtTokenProvider;
+import com.example.eduwithbe.user.domain.UserEntity;
+import com.example.eduwithbe.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @RequestMapping(value = "/mentoring")
 @RequiredArgsConstructor
@@ -20,14 +19,17 @@ import java.util.Objects;
 public class MentoringRecruitmentController {
 
     private final MentoringRecruitmentService mentoringService;
+    private final UserRepository userRepository;
     private final MentoringApplyService mentoringApplyService;
     private final JwtTokenProvider jwtTokenProvider;
 
     //멘토링 작성 글 저장
     @PostMapping(value = "/recruitment")
-    public MentoringRecruitmentEntity saveMentoringRecruit(@RequestBody MentoringRecruitSaveDto saveBoardDto) {
-        MentoringRecruitmentEntity mentoringRecruitment = mentoringService.saveMentoringRecruit(saveBoardDto);
-        return mentoringRecruitment;
+    public ResultResponse saveMentoringRecruit(HttpServletRequest request, @RequestBody MentoringRecruitSaveDto saveBoardDto) {
+        String user = jwtTokenProvider.getUserPk(request.getHeader("Authorization"));
+        mentoringService.saveMentoringRecruit(user, saveBoardDto);
+
+        return new ResultResponse();
     }
 
     //멘토링 작성 글 하나 찾기
@@ -58,22 +60,20 @@ public class MentoringRecruitmentController {
 
     //멘토링 작성 글 수정
     @PatchMapping(value = "/{m_no}")
-    public @ResponseBody Map<String, String> updateMentoringRecruit(@PathVariable Long m_no, @RequestBody MentoringRecruitUpdateDto updateDto) {
+    public ResultResponse updateMentoringRecruit(@PathVariable Long m_no, @RequestBody MentoringRecruitUpdateDto updateDto) {
         mentoringService.updateMentoringRecruitment(m_no, updateDto);
         //MentoringRecruitmentEntity updatedBoard = mentoringService.updateBoard(mentoringRecruitment, saveBoardDto);
 
-        Map<String, String> map = new HashMap<>();
-        map.put("result", "SUCCESS");
-        return map;
+        return new ResultResponse();
     }
 
     //멘토링 작성 글 삭제
     @DeleteMapping(value = "/{m_no}")
-    public String deleteBoard(@PathVariable Long m_no) {
+    public ResultResponse deleteBoard(@PathVariable Long m_no) {
         MentoringRecruitmentEntity mentoringRecruitment = mentoringService.findByMentoringRecruitId(m_no);
         mentoringService.deleteMentoringRecruit(mentoringRecruitment);
 
-        return "success delete";
+        return new ResultResponse();
     }
 
     //키워드 검색
@@ -89,6 +89,9 @@ public class MentoringRecruitmentController {
         String user = jwtTokenProvider.getUserPk(request.getHeader("Authorization"));
         List<MentoringRecruitSearchDto> mentor = mentoringService.findByEmailMentoringMentor(user);
         List<MentoringRecruitSearchDto> mentee = mentoringService.findByEmailMentoringMentee(user);
+
+        System.out.println(mentor);
+        System.out.println(mentee);
 
         return MentoringMentorMenteeDto.builder().mentor(mentor).mentee(mentee).build();
     }
