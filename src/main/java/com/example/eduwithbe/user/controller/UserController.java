@@ -73,7 +73,7 @@ public class UserController {
         if (!passwordEncoder.matches(user.getPwd(), member.getPwd())) {
             throw new IllegalArgumentException("잘못된 비밀번호입니다.");
         }
-        Token tokenDto = jwtTokenProvider.createAccessToken(member.getUsername(), member.getRoles());
+        Token tokenDto = jwtTokenProvider.createAccessToken(member.getUsername(), member.getName(), member.getRoles());
 
         return tokenDto;
     }
