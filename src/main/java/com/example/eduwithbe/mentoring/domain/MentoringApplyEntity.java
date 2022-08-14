@@ -23,6 +23,8 @@ public class MentoringApplyEntity {
 
     private String email;
 
+    private String name;
+
     @Column(nullable = true, length = 1) //수락Y 거부N
     private String result;
 }
