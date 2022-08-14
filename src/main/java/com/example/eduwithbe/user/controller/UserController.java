@@ -2,6 +2,7 @@ package com.example.eduwithbe.user.controller;
 
 import com.example.eduwithbe.mentoring.dto.MentoringApplyEmailDto;
 import com.example.eduwithbe.mentoring.dto.MentoringRecruitUpdateDto;
+import com.example.eduwithbe.mentoring.dto.ResultResponse;
 import com.example.eduwithbe.user.dto.UserUpdateDto;
 import com.example.eduwithbe.user.service.UserService;
 import com.example.eduwithbe.user.domain.UserEntity;
@@ -53,8 +54,6 @@ public class UserController {
                 .age(user.getAge())
                 .address(user.getAddress())
                 .pwd(passwordEncoder.encode(user.getPwd()))
-                .stamp(0)
-                .point(0)
                 .roles(Collections.singletonList("ROLE_USER")) // 최초 가입시 USER 로 설정
                 .build());
 
@@ -80,7 +79,7 @@ public class UserController {
 
     //로그인 체크
     @PostMapping("/loginCheck")
-    public @ResponseBody Map<String, String> check(HttpServletRequest request) {
+    public Map<String, String> check(HttpServletRequest request) {
         String user = jwtTokenProvider.getUserPk(request.getHeader("Authorization"));
 
         Optional<UserEntity> userEntity = userRepository.findByEmail(user);
@@ -93,7 +92,7 @@ public class UserController {
 
     //출석체크
     @GetMapping("/cattendance")
-    public @ResponseBody Map<String, String> updateUserPoint(HttpServletRequest request){
+    public ResultResponse updateUserPoint(HttpServletRequest request){
         String user = jwtTokenProvider.getUserPk(request.getHeader("Authorization"));
         UserEntity userEntity = userRepository.findByEmail(user).orElseThrow(() -> new IllegalArgumentException("신청 실패: 해당 유저가 존재하지 않습니다." + user));
 
@@ -101,35 +100,28 @@ public class UserController {
         if(userEntity.getStamp()+1 == 7) point = userEntity.getPoint()+1000;
         us.updateUserPoint(user, userEntity.getStamp()+1, point);
 
-        Map<String, String> map = new HashMap<>();
-        map.put("result", "SUCCESS");
-        return map;
+        return new ResultResponse();
     }
 
     //회원수정
     @PatchMapping(value = "/edit")
-    public @ResponseBody Map<String, String> updateMentoringRecruit(HttpServletRequest request, @RequestBody UserUpdateDto updateDto) {
+    public ResultResponse updateMentoringRecruit(HttpServletRequest request, @RequestBody UserUpdateDto updateDto) {
         String user = jwtTokenProvider.getUserPk(request.getHeader("Authorization"));
+        updateDto.setPwd(passwordEncoder.encode(updateDto.getPwd()));
         us.updateUser(user, updateDto);
         //MentoringRecruitmentEntity updatedBoard = mentoringService.updateBoard(mentoringRecruitment, saveBoardDto);
 
-        Map<String, String> map = new HashMap<>();
-        map.put("result", "SUCCESS");
-        return map;
+        return new ResultResponse();
     }
 
     //회원탈퇴
     @DeleteMapping(value = "/Withdrawal")
-    public @ResponseBody Map<String, String> saveMentoringApplyRefuse(HttpServletRequest request) {
+    public ResultResponse saveMentoringApplyRefuse(HttpServletRequest request) {
         String user = jwtTokenProvider.getUserPk(request.getHeader("Authorization"));
         UserEntity userEntity = userRepository.findByEmail(user).orElseThrow(() -> new IllegalArgumentException("신청 실패: 해당 유저가 존재하지 않습니다." + user));
 
-        Map<String, String> map = new HashMap<>();
-        map.put("result", "SUCCESS");
-
         userRepository.delete(userEntity);
-
-        return map;
+        return new ResultResponse();
     }
 
 }

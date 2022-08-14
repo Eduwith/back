@@ -2,7 +2,10 @@ package com.example.eduwithbe.user.domain;
 
 import com.example.eduwithbe.domain.StudyRecruitment;
 import com.example.eduwithbe.mentoring.domain.MentoringApplyEntity;
+import com.example.eduwithbe.mentoring.domain.MentoringRecruitmentEntity;
 import com.example.eduwithbe.user.dto.UserSaveDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -49,8 +52,8 @@ public class UserEntity implements UserDetails {
     @Column(nullable = false, columnDefinition = "int default 0")
     private int point;
 
-    //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    public List<MentoringRecruitmentEntity> mentoringRecruitments = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    public List<MentoringRecruitmentEntity> mentoringRecruitments = new ArrayList<>();
 
     // === 사용자-스터디 모집글 관계 설정 === //
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
