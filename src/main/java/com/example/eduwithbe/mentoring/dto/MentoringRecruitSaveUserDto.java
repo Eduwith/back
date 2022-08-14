@@ -11,8 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MentoringRecruitSaveDto {
-
+public class MentoringRecruitSaveUserDto {
     private String title;
     private String role;
     private String field;
@@ -21,6 +20,7 @@ public class MentoringRecruitSaveDto {
     private String way;
     private String keyword;
     private String info;
+    private UserEntity user;
 
     public MentoringRecruitmentEntity toEntity(){
         return MentoringRecruitmentEntity.builder()
@@ -32,6 +32,7 @@ public class MentoringRecruitSaveDto {
                 .way(way)
                 .keyword(keyword)
                 .info(info)
+                .user(user)
                 .build();
     }
 }

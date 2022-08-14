@@ -1,6 +1,9 @@
 package com.example.eduwithbe.mentoring.domain;
 
 import com.example.eduwithbe.mentoring.dto.MentoringRecruitSaveDto;
+import com.example.eduwithbe.user.domain.UserEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -44,19 +47,15 @@ public class MentoringRecruitmentEntity {
     @Column(nullable = false, length = 200)
     private String info;
 
-//    @ManyToOne
-//    @JoinColumn(name = "User_Email")
-//    private UserEntity user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user")
+    private UserEntity user;
 
     @OneToMany(mappedBy = "m_no", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private final List<MentoringApplyEntity> MentoringApply = new ArrayList<>();
 
     @OneToMany(mappedBy = "m_no", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private final List<MentoringApplyEntity> Mentoring = new ArrayList<>();
-
-    private String email;
-
-    private String name;
 
     public void updateBoard(MentoringRecruitSaveDto dto){
         this.title = dto.getTitle();

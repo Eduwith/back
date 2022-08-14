@@ -2,6 +2,7 @@ package com.example.eduwithbe.mentoring.dto;
 
 
 import com.example.eduwithbe.mentoring.domain.MentoringRecruitmentEntity;
+import com.example.eduwithbe.user.domain.UserEntity;
 import lombok.*;
 
 import java.util.List;
@@ -22,11 +23,9 @@ public class MentoringRecruitSearchDto {
     private String way;
     private String keyword;
     private String info;
-    private String name;
     private List<MentoringApplyAllDto> mentoringApply;
+    private String name;
 
-    //private UserEntity user;
-    //private String email;
 
     @Builder
     public MentoringRecruitSearchDto(MentoringRecruitmentEntity me) {
@@ -39,7 +38,7 @@ public class MentoringRecruitSearchDto {
         this.way = me.getWay();
         this.keyword = me.getKeyword();
         this.info = me.getInfo();
-        this.name = me.getName();
         this.mentoringApply = me.getMentoringApply().stream().map(MentoringApplyAllDto::new).collect(Collectors.toList());
+        this.name = me.getUser().getName();
     }
 }

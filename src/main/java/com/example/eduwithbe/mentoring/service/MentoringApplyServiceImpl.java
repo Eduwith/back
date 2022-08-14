@@ -36,12 +36,13 @@ public class MentoringApplyServiceImpl implements MentoringApplyService {
     //멘토링 신청
     @Override
     public String saveMentoringApply(String email, Long m_no) {
-        Optional<UserEntity> user = ur.findByEmail(email);
-        MentoringRecruitmentEntity mentoringRecruitment = mrr.findById(m_no).orElseThrow(() -> new IllegalArgumentException("신청 실패: 해당 멘토링이 존재하지 않습니다." + m_no));
+        UserEntity userEntity = ur.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다." + email));
+        MentoringRecruitmentEntity mentoringRecruitment = mrr.findById(m_no).orElseThrow(() -> new IllegalArgumentException("해당 멘토링이 존재하지 않습니다." + m_no));
 
         MentoringApplySaveDto mentoringApplySaveDto = new MentoringApplySaveDto();
 
-        mentoringApplySaveDto.setEmail(user.get().getEmail());
+        mentoringApplySaveDto.setEmail(userEntity.getEmail());
+        mentoringApplySaveDto.setName(userEntity.getName());
         mentoringApplySaveDto.setM_no(mentoringRecruitment);
 
         MentoringApplyEntity apply = mentoringApplySaveDto.toEntity();

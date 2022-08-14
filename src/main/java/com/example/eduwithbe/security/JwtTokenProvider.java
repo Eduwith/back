@@ -50,7 +50,7 @@ public class JwtTokenProvider {
 //                .compact();
 //    }
 
-    public Token createAccessToken(String userEmail, List<String> roles) {
+    public Token createAccessToken(String userEmail, String name, List<String> roles) {
 
         Claims claims = Jwts.claims().setSubject(userEmail); // JWT payload 에 저장되는 정보단위
         claims.put("roles", roles); // 정보는 key / value 쌍으로 저장된다.
@@ -75,7 +75,7 @@ public class JwtTokenProvider {
                 .compact();
 
 
-        return Token.builder().accessToken(accessToken).refreshToken(refreshToken).email(userEmail).build();
+        return Token.builder().accessToken(accessToken).refreshToken(refreshToken).email(userEmail).name(name).build();
 
 
     }
