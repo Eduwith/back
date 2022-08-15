@@ -18,6 +18,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     Optional<UserEntity> findByEmail(String email);
 
+    boolean existsByEmail(String email);
+
     @Transactional
     @Modifying
     @Query("update UserEntity u set u.name = :name, u.pwd = :pwd, u.address = :address where u.email = :email")

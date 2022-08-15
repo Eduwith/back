@@ -15,12 +15,13 @@ public class UserUpdateDto {
 
     private String name;
     private String pwd;
+    private String changePwd;
     private String address;
 
     public UserEntity toEntity() {
         return UserEntity.builder()
                 .name(name)
-                .pwd(pwd)
+                .pwd(changePwd)
                 .address(address)
                 .build();
     }

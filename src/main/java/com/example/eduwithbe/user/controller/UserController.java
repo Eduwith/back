@@ -1,13 +1,9 @@
 package com.example.eduwithbe.user.controller;
 
-import com.example.eduwithbe.mentoring.dto.MentoringApplyEmailDto;
-import com.example.eduwithbe.mentoring.dto.MentoringRecruitUpdateDto;
 import com.example.eduwithbe.mentoring.dto.ResultResponse;
-import com.example.eduwithbe.user.dto.UserUpdateDto;
+import com.example.eduwithbe.user.dto.*;
 import com.example.eduwithbe.user.service.UserService;
 import com.example.eduwithbe.user.domain.UserEntity;
-import com.example.eduwithbe.user.dto.UserLoginDTO;
-import com.example.eduwithbe.user.dto.UserSaveDTO;
 import com.example.eduwithbe.user.repository.UserRepository;
 import com.example.eduwithbe.security.JwtService;
 import com.example.eduwithbe.security.JwtTokenProvider;
@@ -62,17 +58,28 @@ public class UserController {
         return response;
     }
 
+    //회원가입 체크
+    @PostMapping("/join/check")
+    public ResultResponse joinCheck(@RequestBody UserJoinCheckDto userJoinCheckDto) {
+        ResultResponse resultResponse = new ResultResponse();
+
+        if(us.existsByEmail(userJoinCheckDto.getEmail())) resultResponse.setResult("FAILURE");
+        else resultResponse.setResult("SUCCESS");
+
+        return resultResponse;
+    }
+
     // 로그인
     @PostMapping("/login")
     public Token login(@RequestBody @Validated UserLoginDTO user) {
 //        log.info("user email = {}", user.get("userEmail"));
         //UserEntity member = userRepository.findByEmail(user.getEmail())
-        UserEntity member = userRepository.findByEmail(user.getEmail())
+        UserEntity userEntity = userRepository.findByEmail(user.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 E-MAIL 입니다."));
-        if (!passwordEncoder.matches(user.getPwd(), member.getPwd())) {
+        if (!passwordEncoder.matches(user.getPwd(), userEntity.getPwd())) {
             throw new IllegalArgumentException("잘못된 비밀번호입니다.");
         }
-        Token tokenDto = jwtTokenProvider.createAccessToken(member.getUsername(), member.getName(), member.getRoles());
+        Token tokenDto = jwtTokenProvider.createAccessToken(userEntity.getUsername(), userEntity.getName(), userEntity.getRoles());
 
         return tokenDto;
     }
@@ -91,37 +98,66 @@ public class UserController {
     }
 
     //출석체크
-    @GetMapping("/cattendance")
-    public ResultResponse updateUserPoint(HttpServletRequest request){
+    @PatchMapping("/cattendance")
+    public UserCattendanceDto updateUserPoint(HttpServletRequest request){
         String user = jwtTokenProvider.getUserPk(request.getHeader("Authorization"));
         UserEntity userEntity = userRepository.findByEmail(user).orElseThrow(() -> new IllegalArgumentException("신청 실패: 해당 유저가 존재하지 않습니다." + user));
 
-        int point = 0;
-        if(userEntity.getStamp()+1 == 7) point = userEntity.getPoint()+1000;
-        us.updateUserPoint(user, userEntity.getStamp()+1, point);
+        int stamp = userEntity.getStamp()+1;
+        int point = 100*(stamp/7);
+        System.out.println(stamp/7);
 
-        return new ResultResponse();
+        us.updateUserPoint(user, stamp, point);
+
+        return new UserCattendanceDto(stamp, point);
     }
 
     //회원수정
     @PatchMapping(value = "/edit")
     public ResultResponse updateMentoringRecruit(HttpServletRequest request, @RequestBody UserUpdateDto updateDto) {
         String user = jwtTokenProvider.getUserPk(request.getHeader("Authorization"));
-        updateDto.setPwd(passwordEncoder.encode(updateDto.getPwd()));
-        us.updateUser(user, updateDto);
-        //MentoringRecruitmentEntity updatedBoard = mentoringService.updateBoard(mentoringRecruitment, saveBoardDto);
+        UserEntity userEntity = userRepository.findByEmail(user)
+                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 E-MAIL 입니다."));
+
+        ResultResponse resultResponse = new ResultResponse();
+        if(!passwordEncoder.matches(updateDto.getPwd(), userEntity.getPassword())) {
+            resultResponse.setResult("잘못된 비밀번호입니다.");
+        }
+        else {
+            resultResponse.setResult("SUCCESS");
+            updateDto.setPwd(passwordEncoder.encode(updateDto.getChangePwd()));
+            us.updateUser(user, updateDto);
+        }
+
+        return new ResultResponse();
+    }
+
+    //멘토링 모집글 스크랩
+    @PostMapping(value = "/scrap/mentoring")
+    public ResultResponse saveMentoringRecruit(HttpServletRequest request, @RequestBody Long m_no) {
+        String user = jwtTokenProvider.getUserPk(request.getHeader("Authorization"));
+        us.saveMentoringRecruitScrap(user, m_no);
 
         return new ResultResponse();
     }
 
     //회원탈퇴
-    @DeleteMapping(value = "/Withdrawal")
+    @DeleteMapping(value = "/withdrawal")
     public ResultResponse saveMentoringApplyRefuse(HttpServletRequest request) {
         String user = jwtTokenProvider.getUserPk(request.getHeader("Authorization"));
         UserEntity userEntity = userRepository.findByEmail(user).orElseThrow(() -> new IllegalArgumentException("신청 실패: 해당 유저가 존재하지 않습니다." + user));
 
         userRepository.delete(userEntity);
         return new ResultResponse();
+    }
+
+    //유저-마이페이지-프로필수정
+    @GetMapping(value = "/mypage")
+    public UserInfoDto getMyPage(HttpServletRequest request) {
+        String user = jwtTokenProvider.getUserPk(request.getHeader("Authorization"));
+        UserEntity userEntity = userRepository.findByEmail(user).orElseThrow(() -> new IllegalArgumentException("신청 실패: 해당 유저가 존재하지 않습니다." + user));
+
+        return new UserInfoDto(userEntity);
     }
 
 }

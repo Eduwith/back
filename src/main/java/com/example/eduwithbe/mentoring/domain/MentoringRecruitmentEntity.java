@@ -52,10 +52,13 @@ public class MentoringRecruitmentEntity {
     private UserEntity user;
 
     @OneToMany(mappedBy = "m_no", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private final List<MentoringApplyEntity> MentoringApply = new ArrayList<>();
+    private final List<MentoringScrapEntity> mentoringScrap = new ArrayList<>();
 
     @OneToMany(mappedBy = "m_no", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private final List<MentoringApplyEntity> Mentoring = new ArrayList<>();
+    private final List<MentoringApplyEntity> mentoringApply = new ArrayList<>();
+
+    @OneToMany(mappedBy = "m_no", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private final List<MentoringEntity> mentoring = new ArrayList<>();
 
     public void updateBoard(MentoringRecruitSaveDto dto){
         this.title = dto.getTitle();

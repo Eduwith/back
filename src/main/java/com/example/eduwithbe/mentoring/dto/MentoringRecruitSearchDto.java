@@ -2,7 +2,6 @@ package com.example.eduwithbe.mentoring.dto;
 
 
 import com.example.eduwithbe.mentoring.domain.MentoringRecruitmentEntity;
-import com.example.eduwithbe.user.domain.UserEntity;
 import lombok.*;
 
 import java.util.List;
@@ -23,8 +22,9 @@ public class MentoringRecruitSearchDto {
     private String way;
     private String keyword;
     private String info;
-    private List<MentoringApplyAllDto> mentoringApply;
     private String name;
+    private List<MentoringApplyAllDto> mentoringApply;
+
 
 
     @Builder

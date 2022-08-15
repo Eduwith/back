@@ -63,16 +63,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         //http.httpBasic().disable();
-        http.cors().disable()
+        http.logout() // 로그아웃 처리
+                .logoutUrl("/user/logout")
+                .logoutSuccessUrl("/user/login") // 로그아웃 성공 후 이동페이지
+                .and()
+                .cors().disable()
                 .csrf().disable()
-
                 .authorizeRequests()
 //                .antMatchers("/**").permitAll()
                 .antMatchers(PERMIT_URL_ARRAY).permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user/**").permitAll()
                 .antMatchers("/main/**").permitAll()
-                .antMatchers("/test").permitAll()
+                .antMatchers("/test/**").permitAll()
+                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
