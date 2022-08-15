@@ -18,12 +18,10 @@ public class MentoringApplyEmailDto {
     private Long apply_no;
     private Long m_no;
     private String email;
-    private String result;
 
     public MentoringApplyEmailDto(MentoringApplyEntity ma) {
         this.apply_no = ma.getApply_no();
         this.m_no = ma.getM_no().getM_no();
         this.email = ma.getEmail();
-        this.result = ma.getResult();
     }
 }
