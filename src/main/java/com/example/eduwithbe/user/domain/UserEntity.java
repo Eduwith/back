@@ -3,6 +3,7 @@ package com.example.eduwithbe.user.domain;
 import com.example.eduwithbe.domain.StudyRecruitment;
 import com.example.eduwithbe.mentoring.domain.MentoringApplyEntity;
 import com.example.eduwithbe.mentoring.domain.MentoringRecruitmentEntity;
+import com.example.eduwithbe.mentoring.domain.MentoringScrapEntity;
 import com.example.eduwithbe.user.dto.UserSaveDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -53,7 +54,10 @@ public class UserEntity implements UserDetails {
     private int point;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    public List<MentoringRecruitmentEntity> mentoringRecruitments = new ArrayList<>();
+    public final List<MentoringRecruitmentEntity> mentoringRecruitments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private final List<MentoringScrapEntity> mentoringScrap = new ArrayList<>();
 
     // === 사용자-스터디 모집글 관계 설정 === //
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
