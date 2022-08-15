@@ -39,7 +39,7 @@ public class MentoringApplyController {
     }
 
     //멘토링 멘티/멘토 지원
-    @GetMapping(value = "/mentoring/{m_no}/apply")
+    @PostMapping(value = "/mentoring/{m_no}/apply")
     public ResultResponse saveMentoringApply(HttpServletRequest request, @PathVariable Long m_no) {
         String user = jwtTokenProvider.getUserPk(request.getHeader("Authorization"));
         mentoringApplyService.saveMentoringApply(user, m_no);
@@ -47,7 +47,7 @@ public class MentoringApplyController {
     }
 
     //멘토링 신청 수락
-    @GetMapping(value = "/mypage/{m_no}/apply/{apply_no}")
+    @PostMapping(value = "/mypage/{m_no}/apply/{apply_no}")
     public ResultResponse saveMentoringApplyAccept(HttpServletRequest request, @PathVariable Long m_no, @PathVariable Long apply_no) {
         String user = jwtTokenProvider.getUserPk(request.getHeader("Authorization"));
         mentoringService.saveMentoring(user, m_no, apply_no);

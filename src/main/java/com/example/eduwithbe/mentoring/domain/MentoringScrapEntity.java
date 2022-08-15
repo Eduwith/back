@@ -1,5 +1,6 @@
 package com.example.eduwithbe.mentoring.domain;
 
+import com.example.eduwithbe.user.domain.UserEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,20 +11,18 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name="mentoringApply")
-public class MentoringApplyEntity {
+@Table(name="mentoringScrap")
+public class MentoringScrapEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "apply_no")
-    private Long apply_no;
+    @Column(name = "scrap_no")
+    private Long mentoring_no;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "m_no")
     private MentoringRecruitmentEntity m_no;
 
-    private String email;
-
-    private String name;
-
-    private int age;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "email")
+    private UserEntity user;
 }
