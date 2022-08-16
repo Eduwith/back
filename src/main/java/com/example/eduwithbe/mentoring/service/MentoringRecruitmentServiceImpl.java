@@ -20,6 +20,8 @@ public class MentoringRecruitmentServiceImpl implements MentoringRecruitmentServ
 
     @Autowired
     private final MentoringRecruitmentRepository mr;
+
+    @Autowired
     private final UserRepository userRepository;
 
     //멘토링 작성 글 생성
