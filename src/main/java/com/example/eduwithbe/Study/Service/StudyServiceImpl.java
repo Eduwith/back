@@ -2,10 +2,12 @@ package com.example.eduwithbe.Study.Service;
 
 import com.example.eduwithbe.Study.Domain.StudyApplyEntity;
 import com.example.eduwithbe.Study.Domain.StudyRecruitmentEntity;
+import com.example.eduwithbe.Study.Domain.StudyScrapEntity;
 import com.example.eduwithbe.Study.Dto.StudySaveRequestDto;
 import com.example.eduwithbe.Study.Dto.StudyRecruitDto;
 import com.example.eduwithbe.Study.Repository.StudyApplyRepository;
 import com.example.eduwithbe.Study.Repository.StudyRepository;
+import com.example.eduwithbe.Study.Repository.StudyScrapRepository;
 import com.example.eduwithbe.mappers.StudyMapper;
 import com.example.eduwithbe.paging.CommonParams;
 import com.example.eduwithbe.paging.Pagination;
@@ -25,6 +27,7 @@ public class StudyServiceImpl implements StudyService{
     private final StudyRepository studyRepository;
     private final UserRepository userRepository;
     private final StudyApplyRepository studyApplyRepository;
+    private final StudyScrapRepository studyScrapRepository;
     private final StudyMapper studyMapper;
 
 
@@ -123,5 +126,28 @@ public class StudyServiceImpl implements StudyService{
     @Transactional
     public void deleteStudy(final Long stdNo) {
         studyRepository.deleteById(stdNo);
+    }
+
+    // 스터디 스크랩 정보 저장
+    @Override
+    public String saveStudyScrap(String myEmail, Long stdNo) {
+        // 스크랩하려는 모집글의 번호 가져오기
+        Long s_no = studyRepository.findById(stdNo)
+                .orElseThrow(() -> new IllegalArgumentException("saveStudyScrap : 해당 글이 존재하지 않습니다."))
+                .getS_no();
+
+        // 내 스터디 모집글인지 확인
+        List<Long> stdNumsList = studyRepository.findStdNumsByMyEmail(myEmail);
+        if(stdNumsList.contains(s_no)) {
+            return "내 글엔 스크랩할 수 없습니다.";
+        }
+        else {
+            studyScrapRepository.save(StudyScrapEntity.builder()
+                    .email(myEmail)
+                    .s_no(stdNo)
+                    .build());
+
+            return "success";
+        }
     }
 }

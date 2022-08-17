@@ -19,7 +19,7 @@ public interface StudyRepository extends JpaRepository<StudyRecruitmentEntity, L
 
 
     @Query(value = "select s.s_no from StudyRecruitmentEntity s where s.user.email = :email")
-    List<String> findStdNoByMyEmail(@Param("email") String myEmail);
+    List<Long> findStdNumsByMyEmail(@Param("email") String myEmail);
 
     // 스터디 마감(반환값은 update한 레코드 수)
     @Modifying(clearAutomatically = true)
