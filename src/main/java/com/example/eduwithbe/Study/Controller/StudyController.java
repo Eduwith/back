@@ -79,4 +79,13 @@ public class StudyController {
     public void deleteStudy(@PathVariable Long stdNo) {
         studyService.deleteStudy(stdNo);
     }
+
+    // 스터디 스크랩
+    @GetMapping("/scrap")
+    public String scrapStudy(HttpServletRequest request,
+                             @RequestParam(value = "stdNo") Long stdNo) {
+        String userEmail = jwtTokenProvider.getUserPk(request.getHeader("Authorization"));
+
+        return studyService.saveStudyScrap(userEmail, stdNo);
+    }
 }
