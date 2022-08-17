@@ -43,6 +43,7 @@ public class MentoringApplyServiceImpl implements MentoringApplyService {
 
         mentoringApplySaveDto.setEmail(userEntity.getEmail());
         mentoringApplySaveDto.setName(userEntity.getName());
+        mentoringApplySaveDto.setAge(userEntity.getAge());
         mentoringApplySaveDto.setM_no(mentoringRecruitment);
 
         MentoringApplyEntity apply = mentoringApplySaveDto.toEntity();
