@@ -20,4 +20,6 @@ public interface StudyService {
     String updateStudy(final Long stdNo, final StudySaveRequestDto studyReq); // 스터디 모집글 수정
 
     void deleteStudy(Long stdNo); // 스터디 모집글 삭제
+
+    String saveStudyScrap(String myEmail, Long stdNo); // 스터디 스크랩 저장
 }
