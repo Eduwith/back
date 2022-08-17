@@ -3,7 +3,7 @@
 
 <mapper namespace="com.example.eduwithbe.mappers.StudyMapper">
     <!-- SELECT 결과 Map -->
-    <resultMap id="StudyResultMap" type="com.example.eduwithbe.dto.StudyResponseDto">
+    <resultMap id="StudyResultMap" type="com.example.eduwithbe.Study.Dto.StudyRecruitDto">
         <result property="s_no"             column="s_no" />
         <result property="title"            column="title" />
         <result property="contents"         column="contents" />
@@ -12,6 +12,7 @@
         <result property="current_people"   column="current_people" />
         <result property="r_end_date"       column="r_end_date" />
         <result property="s_period"         column="s_period" />
+        <result property="recruitYN"        column="recruitYN"/>
     </resultMap>
 
     <!-- WHERE 조건 (태그 검색) -->
@@ -42,7 +43,8 @@
             total_people,
             current_people,
             r_end_date,
-            s_period
+            s_period,
+            recruityn
         FROM
             study_recruitment
         <include refid="conditions" />
@@ -50,5 +52,4 @@
             s_no DESC
         LIMIT #{pagination.limitStart}, #{recordPerPage}
     </select>
-
 </mapper>
