@@ -27,7 +27,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     @Transactional
     @Modifying
-    @Query("update UserEntity u set u.stamp = :stamp, u.point = :point where u.email = :email")
-    void updateByUserPoint(String email, int stamp, int point);
+    @Query("update UserEntity u set u.stamp = :stamp, u.point = :point, u.day = :day where u.email = :email")
+    void updateByUserPoint(String email, int stamp, int point, int day);
 
 }

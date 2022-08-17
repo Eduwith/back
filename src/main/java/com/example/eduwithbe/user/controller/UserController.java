@@ -1,7 +1,10 @@
 package com.example.eduwithbe.user.controller;
 
 import com.example.eduwithbe.mentoring.dto.ResultResponse;
+import com.example.eduwithbe.user.domain.UserAttendanceEntity;
 import com.example.eduwithbe.user.dto.*;
+import com.example.eduwithbe.user.repository.UserAttendRepository;
+import com.example.eduwithbe.user.service.UserAttendService;
 import com.example.eduwithbe.user.service.UserService;
 import com.example.eduwithbe.user.domain.UserEntity;
 import com.example.eduwithbe.user.repository.UserRepository;
@@ -29,9 +32,13 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
+    private final UserAttendRepository userAttendRepository;
 
     @Autowired
     private UserService us;
+
+    @Autowired
+    private UserAttendService uas;
 
     @Autowired
     private JwtService jwtService;
@@ -97,19 +104,37 @@ public class UserController {
         return map;
     }
 
-    //출석체크
-    @PatchMapping("/cattendance")
-    public UserCattendanceDto updateUserPoint(HttpServletRequest request){
+    //출석체크 조회
+    @GetMapping("/attendance")
+    public UserGetAttendDto getUserPoint(HttpServletRequest request){
+        String user = jwtTokenProvider.getUserPk(request.getHeader("Authorization"));
+        UserEntity userEntity = userRepository.findByEmail(user).orElseThrow(() -> new IllegalArgumentException("신청 실패: 해당 유저가 존재하지 않습니다." + user));
+
+        int stamp = userEntity.getStamp();
+        int point = 100*(stamp/7);
+        int day = userEntity.getDay();
+
+        List<UserAttendanceEntity> userAttendanceEntities = userAttendRepository.findByEmailAttendance(user);
+        return new UserGetAttendDto(stamp, point, day, userAttendanceEntities);
+    }
+
+    //출석체크 반영
+    @PatchMapping("/attendance")
+    public UserUpdateAttendanceDto updateUserPoint(HttpServletRequest request){
         String user = jwtTokenProvider.getUserPk(request.getHeader("Authorization"));
         UserEntity userEntity = userRepository.findByEmail(user).orElseThrow(() -> new IllegalArgumentException("신청 실패: 해당 유저가 존재하지 않습니다." + user));
 
         int stamp = userEntity.getStamp()+1;
         int point = 100*(stamp/7);
-        System.out.println(stamp/7);
+        int day = userEntity.getDay()+1;
 
-        us.updateUserPoint(user, stamp, point);
+        if(day == 7) {
+            uas.saveUserAttendApply(userEntity, "출석체크 리워드", 100);
+            day = 0;
+        }
 
-        return new UserCattendanceDto(stamp, point);
+        us.updateUserPoint(user, stamp, point, day);
+        return new UserUpdateAttendanceDto(stamp, point, day);
     }
 
     //회원수정

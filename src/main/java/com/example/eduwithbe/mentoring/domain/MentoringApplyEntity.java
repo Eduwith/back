@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Setter
 @Table(name="mentoringApply")
 public class MentoringApplyEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "apply_no")
