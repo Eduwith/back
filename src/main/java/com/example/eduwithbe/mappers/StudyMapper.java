@@ -1,6 +1,6 @@
 package com.example.eduwithbe.mappers;
 
-import com.example.eduwithbe.dto.StudyResponseDto;
+import com.example.eduwithbe.Study.Dto.StudyRecruitDto;
 import com.example.eduwithbe.paging.CommonParams;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,5 +12,5 @@ public interface StudyMapper {
     int count(final CommonParams params);
 
     // 모집글 리스트 조회
-    List<StudyResponseDto> findAll(final CommonParams params);
+    List<StudyRecruitDto> findAll(final CommonParams params);
 }

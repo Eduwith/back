@@ -1,16 +1,19 @@
-package com.example.eduwithbe.domain;
+package com.example.eduwithbe.Study.Domain;
 
 import com.example.eduwithbe.user.domain.UserEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "study_recruitment")
 @Entity
-public class StudyRecruitment {
+public class StudyRecruitmentEntity {
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,17 +44,22 @@ public class StudyRecruitment {
     private char recruitYN; //모집 완료 여부
 
     // 관계 매핑
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     @JoinColumn(nullable = false, name = "user_email")
     private UserEntity user;
 
-//    @OneToMany(mappedBy = "studyRecruitment",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private List<StudyApply> studyApplies;
+    @JsonIgnore
+    @OneToMany(mappedBy = "studyRecruitment")
+    private final List<StudyApplyEntity> studyApplies = new ArrayList<>();
 
+    public void addStudyApplies(StudyApplyEntity studyApply) {
+        this.studyApplies.add(studyApply);
+    }
 
     @Builder
-    public StudyRecruitment(String title, String contents, String tag, int total_people, int current_people,
-                            Date r_end_date, int s_period, char recruitYN, UserEntity user) {
+    public StudyRecruitmentEntity(String title, String contents, String tag, int total_people, int current_people,
+                                 Date r_end_date, int s_period, char recruitYN, UserEntity user) {
         this.title = title;
         this.contents = contents;
         this.tag = tag;
@@ -71,7 +79,8 @@ public class StudyRecruitment {
     }
 
     // 모집글 수정
-    public void update(String title, String contents, String tag, int total_people, Date r_end_date, int s_period) {
+    public void update(String title, String contents, String tag, int total_people,
+                       Date r_end_date, int s_period) {
         this.title = title;
         this.contents = contents;
         this.tag = tag;
