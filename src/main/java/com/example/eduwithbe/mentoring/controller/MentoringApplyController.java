@@ -61,6 +61,7 @@ public class MentoringApplyController {
             noticeSaveDto.setTitle(mentoringRecruitment.get().getTitle() + " 멘토링 - 방금 새로운 " + role +"가 지원했어요.");
             noticeSaveDto.setUser(mentoringRecruitment.get().getUser());
             noticeSaveDto.setField("Mentoring");
+            noticeSaveDto.setRead("N");
             noticeService.saveNotice(noticeSaveDto);
         }
         return new ResultResponse();
@@ -84,6 +85,7 @@ public class MentoringApplyController {
             noticeSaveDto.setTitle(mentoringRecruitment.get().getTitle() + " 멘토링 - " + role + "신청이 수락되었어요.");
             noticeSaveDto.setUser(userEntity);
             noticeSaveDto.setField("Mentoring");
+            noticeSaveDto.setRead("N");
             noticeService.saveNotice(noticeSaveDto);
         }
         return new ResultResponse();
@@ -107,6 +109,7 @@ public class MentoringApplyController {
             noticeSaveDto.setTitle(mentoringRecruitment.get().getTitle() + " 멘토링 - " + role + "신청이 거절되었어요.");
             noticeSaveDto.setUser(userEntity);
             noticeSaveDto.setField("Mentoring");
+            noticeSaveDto.setRead("N");
             noticeService.saveNotice(noticeSaveDto);
         }
 

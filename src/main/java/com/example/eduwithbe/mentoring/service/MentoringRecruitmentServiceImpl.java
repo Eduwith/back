@@ -3,7 +3,6 @@ package com.example.eduwithbe.mentoring.service;
 import com.example.eduwithbe.mentoring.dto.*;
 import com.example.eduwithbe.user.domain.UserEntity;
 import com.example.eduwithbe.user.repository.UserRepository;
-import com.example.eduwithbe.user.service.UserService;
 import com.example.eduwithbe.mentoring.domain.MentoringRecruitmentEntity;
 import com.example.eduwithbe.mentoring.repository.MentoringRecruitmentRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,7 +23,7 @@ public class MentoringRecruitmentServiceImpl implements MentoringRecruitmentServ
     private final UserRepository userRepository;
 
     //멘토링 작성 글 생성
-    public MentoringRecruitmentEntity saveMentoringRecruit(String user, MentoringRecruitSaveDto dto){
+    public void saveMentoringRecruit(String user, MentoringRecruitSaveDto dto){
         UserEntity userEntity = userRepository.findByEmail(user).orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다." + user));
         MentoringRecruitSaveUserDto mentoringRecruitSaveUserDto = new MentoringRecruitSaveUserDto();
         mentoringRecruitSaveUserDto.setUser(userEntity);
@@ -40,13 +38,11 @@ public class MentoringRecruitmentServiceImpl implements MentoringRecruitmentServ
 
         MentoringRecruitmentEntity mentoringRecruit = mentoringRecruitSaveUserDto.toEntity();
         mr.save(mentoringRecruit);
-        return mentoringRecruit;
     }
 
     //멘토링 작성 글 하나 가져옴
     public MentoringRecruitmentEntity findByMentoringRecruitId(Long m_no){
-        MentoringRecruitmentEntity mentoringRecruitment = mr.findById(m_no).orElseThrow();
-        return mentoringRecruitment;
+        return mr.findById(m_no).orElseThrow();
     }
 
     //멘토링 작성 글 전체 리스트
@@ -125,6 +121,5 @@ public class MentoringRecruitmentServiceImpl implements MentoringRecruitmentServ
                 .map(MentoringRecruitListDto::new)
                 .collect(Collectors.toList());
     }
-
 
 }

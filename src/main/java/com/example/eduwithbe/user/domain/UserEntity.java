@@ -55,12 +55,12 @@ public class UserEntity implements UserDetails {
     @Column(nullable = false, columnDefinition = "int default 0")
     private int day;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private final List<NoticeEntity> noticeEntities = new ArrayList<>();
+
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private final List<UserAttendanceEntity> userAttendanceEntities = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    public final List<NoticeEntity> noticeEntities = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     public final List<MentoringRecruitmentEntity> mentoringRecruitments = new ArrayList<>();

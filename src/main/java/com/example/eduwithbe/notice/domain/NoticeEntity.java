@@ -5,8 +5,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Builder
 @NoArgsConstructor
@@ -16,6 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 @Table(name="notice")
 public class NoticeEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "notice_no")
@@ -30,8 +29,10 @@ public class NoticeEntity {
     @Column(nullable = false)
     private String field;
 
+
+    private String check_read;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user")
     private UserEntity user;
-
 }
