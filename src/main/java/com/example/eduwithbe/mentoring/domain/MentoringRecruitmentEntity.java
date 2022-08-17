@@ -51,12 +51,14 @@ public class MentoringRecruitmentEntity {
     @JoinColumn(name = "user")
     private UserEntity user;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "m_no", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private final List<MentoringScrapEntity> mentoringScrap = new ArrayList<>();
 
     @OneToMany(mappedBy = "m_no", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private final List<MentoringApplyEntity> mentoringApply = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "m_no", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private final List<MentoringEntity> mentoring = new ArrayList<>();
 

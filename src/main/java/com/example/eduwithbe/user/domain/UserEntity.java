@@ -2,8 +2,10 @@ package com.example.eduwithbe.user.domain;
 
 import com.example.eduwithbe.Study.Domain.StudyApplyEntity;
 import com.example.eduwithbe.Study.Domain.StudyRecruitmentEntity;
+import com.example.eduwithbe.mentoring.domain.MentoringEntity;
 import com.example.eduwithbe.mentoring.domain.MentoringRecruitmentEntity;
 import com.example.eduwithbe.mentoring.domain.MentoringScrapEntity;
+import com.example.eduwithbe.notice.domain.NoticeEntity;
 import com.example.eduwithbe.user.dto.UserSaveDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -52,6 +54,19 @@ public class UserEntity implements UserDetails {
 
     @Column(nullable = false, columnDefinition = "int default 0")
     private int point;
+
+    @Column(nullable = false, columnDefinition = "int default 0")
+    private int day;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private final List<NoticeEntity> noticeEntities = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private final List<MentoringEntity> mentoringEntities = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private final List<UserAttendanceEntity> userAttendanceEntities = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     public final List<MentoringRecruitmentEntity> mentoringRecruitments = new ArrayList<>();

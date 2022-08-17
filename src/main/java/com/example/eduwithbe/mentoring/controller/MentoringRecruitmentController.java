@@ -62,7 +62,6 @@ public class MentoringRecruitmentController {
     @PatchMapping(value = "/{m_no}")
     public ResultResponse updateMentoringRecruit(@PathVariable Long m_no, @RequestBody MentoringRecruitUpdateDto updateDto) {
         mentoringService.updateMentoringRecruitment(m_no, updateDto);
-        //MentoringRecruitmentEntity updatedBoard = mentoringService.updateBoard(mentoringRecruitment, saveBoardDto);
 
         return new ResultResponse();
     }
@@ -89,9 +88,6 @@ public class MentoringRecruitmentController {
         String user = jwtTokenProvider.getUserPk(request.getHeader("Authorization"));
         List<MentoringRecruitSearchDto> mentor = mentoringService.findByEmailMentoringMentor(user);
         List<MentoringRecruitSearchDto> mentee = mentoringService.findByEmailMentoringMentee(user);
-
-        System.out.println(mentor);
-        System.out.println(mentee);
 
         return MentoringMentorMenteeDto.builder().mentor(mentor).mentee(mentee).build();
     }
