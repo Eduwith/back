@@ -1,8 +1,8 @@
 package com.example.eduwithbe.user.domain;
 
-import com.example.eduwithbe.domain.StudyRecruitment;
 import com.example.eduwithbe.Study.Domain.StudyApplyEntity;
 import com.example.eduwithbe.Study.Domain.StudyRecruitmentEntity;
+import com.example.eduwithbe.mentoring.domain.MentoringEntity;
 import com.example.eduwithbe.mentoring.domain.MentoringRecruitmentEntity;
 import com.example.eduwithbe.mentoring.domain.MentoringScrapEntity;
 import com.example.eduwithbe.notice.domain.NoticeEntity;
@@ -60,6 +60,9 @@ public class UserEntity implements UserDetails {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private final List<NoticeEntity> noticeEntities = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private final List<MentoringEntity> mentoringEntities = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
