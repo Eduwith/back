@@ -43,6 +43,7 @@ public class MentoringServiceImpl implements MentoringService {
 
         mentoringSaveDto.setEmail(user.get().getEmail());
         mentoringSaveDto.setM_no(mentoringRecruitment);
+        mentoringSaveDto.setUser(user.get());
 
         MentoringEntity apply = mentoringSaveDto.toEntity();
         mr.save(apply);

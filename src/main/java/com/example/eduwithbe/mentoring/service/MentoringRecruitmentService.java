@@ -5,7 +5,6 @@ import com.example.eduwithbe.mentoring.dto.MentoringRecruitListDto;
 import com.example.eduwithbe.mentoring.dto.MentoringRecruitSaveDto;
 import com.example.eduwithbe.mentoring.dto.MentoringRecruitSearchDto;
 import com.example.eduwithbe.mentoring.dto.MentoringRecruitUpdateDto;
-import com.example.eduwithbe.user.domain.UserEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
 @Service
 public interface MentoringRecruitmentService {
 
-    MentoringRecruitmentEntity saveMentoringRecruit(String user, MentoringRecruitSaveDto dto);
+    void saveMentoringRecruit(String user, MentoringRecruitSaveDto dto);
 
     List<MentoringRecruitListDto> findByTitleContaining(String keyword);
 

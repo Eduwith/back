@@ -67,8 +67,8 @@ public class UserService {
     }
 
     //유저 출석체크
-    public void updateUserPoint(String email, int stamp, int point) {
-        ur.updateByUserPoint(email, stamp, point);
+    public void updateUserPoint(String email, int stamp, int point, int day) {
+        ur.updateByUserPoint(email, stamp, point, day);
     }
 
 
