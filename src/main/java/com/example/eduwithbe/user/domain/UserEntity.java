@@ -1,10 +1,13 @@
 package com.example.eduwithbe.user.domain;
 
 import com.example.eduwithbe.domain.StudyRecruitment;
+import com.example.eduwithbe.Study.Domain.StudyApplyEntity;
+import com.example.eduwithbe.Study.Domain.StudyRecruitmentEntity;
 import com.example.eduwithbe.mentoring.domain.MentoringRecruitmentEntity;
 import com.example.eduwithbe.mentoring.domain.MentoringScrapEntity;
 import com.example.eduwithbe.notice.domain.NoticeEntity;
 import com.example.eduwithbe.user.dto.UserSaveDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -69,24 +72,26 @@ public class UserEntity implements UserDetails {
     private final List<MentoringScrapEntity> mentoringScrap = new ArrayList<>();
 
     // === 사용자-스터디 모집글 관계 설정 === //
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    public List<StudyRecruitment> studyRecruitments = new ArrayList<>();
-
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    public List<StudyRecruitmentEntity> studyRecruitments = new ArrayList<>();
 
 
     // 모집글 작성
-    public void addStudyRecruitment(StudyRecruitment study) {
+    public void addStudyRecruitment(StudyRecruitmentEntity study) {
         this.studyRecruitments.add(study);
     }
 
-//    // === 사용자-스터디 지원 관계 설정 === //
-//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    public List<StudyApply> studyApplies = new ArrayList<>();
-//
-//    // 지원 정보 작성
-//    public void addStudyApplies(StudyApply apply) {
-//        this.studyApplies.add(apply);
-//    }
+    // === 사용자-스터디 지원 관계 설정 === //
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    public List<StudyApplyEntity> studyApplies = new ArrayList<>();
+
+
+    // 지원 정보 작성
+    public void addStudyApplies(StudyApplyEntity apply) {
+        this.studyApplies.add(apply);
+    }
 
 //    public void newMentoringRecruitment(MentoringRecruitmentEntity m){
 //        this.mentoringRecruitments.
